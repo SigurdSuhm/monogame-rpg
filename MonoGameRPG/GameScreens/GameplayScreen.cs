@@ -21,6 +21,10 @@ namespace MonoGameRPG
         // Player object
         private Player player;
 
+        // Indicates if the game is paused
+        // This halts all input related to player movement, AI etc.
+        private bool paused = false;
+
         #endregion
 
         #region Constructors
@@ -66,7 +70,8 @@ namespace MonoGameRPG
         /// <param name="gameTime">Snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            handlePlayerInput(gameTime);
+            if (!paused)
+                handlePlayerInput(gameTime);
 
             base.Update(gameTime);
         }

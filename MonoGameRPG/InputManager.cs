@@ -70,7 +70,7 @@ namespace MonoGameRPG
         /// </summary>
         private InputManager()
         {
-            mousePosition = new Vector2(0, 0);
+            mousePosition = Vector2.Zero;
         }
 
         #endregion

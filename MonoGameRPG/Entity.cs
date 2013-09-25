@@ -47,7 +47,7 @@ namespace MonoGameRPG
         /// </summary>
         public Entity()
         {
-            position = new Vector2(0, 0);
+            position = Vector2.Zero;
         }
 
         /// <summary>

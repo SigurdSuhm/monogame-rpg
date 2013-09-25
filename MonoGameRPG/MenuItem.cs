@@ -20,6 +20,9 @@ namespace MonoGameRPG
         // The image associated with the menu item
         private Image image;
 
+        // Menu item image pulse effect
+        private PulseEffect pulseEffect;
+
         // Position of the menu item relative to the menu
         private Vector2 position;
 
@@ -66,7 +69,7 @@ namespace MonoGameRPG
             // Set texture path for the menu item image
             image = new Image(texturePath);
 
-            position = new Vector2(0, 0);
+            position = Vector2.Zero;
         }
 
         #endregion
@@ -97,6 +100,9 @@ namespace MonoGameRPG
         {
             hasMouseFocus = true;
 
+            // Activate pulse effect
+            image.ActivateEffect("PulseEffect");
+
             if (MouseEnter != null)
                 MouseEnter();
         }
@@ -111,6 +117,9 @@ namespace MonoGameRPG
         private void OnMouseLeave()
         {
             hasMouseFocus = false;
+
+            // Deactivate pulse effect
+            image.DeactivateEffect("PulseEffect");
 
             if (MouseLeave != null)
                 MouseLeave();
@@ -146,6 +155,12 @@ namespace MonoGameRPG
         public void LoadContent(ContentManager contentManager)
         {
             image.LoadContent(contentManager);
+
+            // Load pulse effect and associate it with the image
+            image.AddEffect<PulseEffect>(ref pulseEffect, "PulseEffect");
+            pulseEffect.MinAlpha = 0.2f;
+            pulseEffect.PulseSpeed = 1.5f;
+            image.DeactivateEffect("PulseEffect");
         }
 
         /// <summary>
@@ -162,6 +177,8 @@ namespace MonoGameRPG
         /// <param name="gameTime">Snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
+            image.Update(gameTime);
+
             if (InputManager.Instance.MousePosition.X >= position.X &&
             InputManager.Instance.MousePosition.X <= (position.X + Image.Dimensions.X) &&
             InputManager.Instance.MousePosition.Y >= position.Y &&

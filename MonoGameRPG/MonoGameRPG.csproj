@@ -37,6 +37,8 @@
   <ItemGroup>
     <Compile Include="BaseGame.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Graphics\ImageEffect.cs" />
+    <Compile Include="Graphics\PulseEffect.cs" />
     <Compile Include="Interfaces\IDrawable.cs" />
     <Compile Include="Interfaces\IUpdateable.cs" />
     <Compile Include="GameScreens\OptionsScreen.cs" />
@@ -50,7 +52,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameScreens\ScreenManager.cs" />
-    <Compile Include="Image.cs" />
+    <Compile Include="Graphics\Image.cs" />
     <Compile Include="GameScreens\SplashScreen.cs" />
     <Compile Include="XmlManager.cs" />
   </ItemGroup>
