@@ -1,8 +1,9 @@
 ﻿#region Using Statements
 
+using Microsoft.Xna.Framework;
+
 #endregion
 
-using Microsoft.Xna.Framework;
 namespace MonoGameRPG
 {
     /// <summary>
@@ -13,12 +14,12 @@ namespace MonoGameRPG
         #region Fields
 
         // Pulse effect speed
-        private float pulseSpeed;
+        private float pulseSpeed = 1.0f;
 
         // Pulse effect maximum alpha
-        private float maxAlpha;
+        private float maxAlpha = 1.0f;
         // Pulse effect minimum alpha
-        private float minAlpha;
+        private float minAlpha = 0.0f;
 
         // Indicates if the alpha is currently increasing
         private bool increasing;
@@ -63,11 +64,7 @@ namespace MonoGameRPG
         /// </summary>
         public PulseEffect()
         {
-            pulseSpeed = 1.0f;
             increasing = false;
-
-            maxAlpha = 1.0f;
-            minAlpha = 0.0f;
         }
 
         #endregion
