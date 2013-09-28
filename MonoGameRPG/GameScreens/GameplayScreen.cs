@@ -7,15 +7,24 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using MonoGameRPG.Gameplay;
+
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.GameScreens
 {
     /// <summary>
     /// Game screen used for actual gameplay.
     /// </summary>
     public class GameplayScreen : GameScreen
     {
+        #region Constants
+
+        // TODO: FOR TESTING PURPOSES
+        private const float PLAYER_SPEED = 120.0f;
+
+        #endregion
+
         #region Fields
 
         // Player object
@@ -24,6 +33,9 @@ namespace MonoGameRPG
         // Indicates if the game is paused
         // This halts all input related to player movement, AI etc.
         private bool paused = false;
+
+        // TODO: FOR TESTING PURPOSES
+        TileMap tileMap;
 
         #endregion
 
@@ -50,6 +62,10 @@ namespace MonoGameRPG
         {
             // Load content for the player
             player.LoadContent(contentManager);
+            player.Image.AnimationManager.Looping = true;
+
+            tileMap = TileMapLoader.LoadTileMap("TestMap.xml");
+            tileMap.LoadContent(contentManager);
 
             base.LoadContent(contentManager);
         }
@@ -59,6 +75,7 @@ namespace MonoGameRPG
         /// </summary>
         public override void UnloadContent()
         {
+            tileMap.UnloadContent();
             player.UnloadContent();
 
             base.UnloadContent();
@@ -70,8 +87,14 @@ namespace MonoGameRPG
         /// <param name="gameTime">Snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            player.Update(gameTime);
+
             if (!paused)
                 handlePlayerInput(gameTime);
+
+            // TODO: FOR TESTING PURPOSES
+            if (InputManager.Instance.KeyPressed(Keys.Escape))
+                BaseGame.Instance.Exit();
 
             base.Update(gameTime);
         }
@@ -82,6 +105,8 @@ namespace MonoGameRPG
         /// <param name="spriteBatch">Sprite batch object used for 2D renderin.</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
+            // Draw tile map
+            tileMap.Draw(spriteBatch);
             // Draw player object
             player.Draw(spriteBatch);
 
@@ -97,26 +122,68 @@ namespace MonoGameRPG
         /// </summary>
         private void handlePlayerInput(GameTime gameTime)
         {
+            // Indicates if the player is moving this frame
+            bool playerMoving = false;
+            // Vector describing the current player direction - Used for animation
+            Vector2 playerDirection;
+            playerDirection.X = 0;
+            playerDirection.Y = 0;
+
             // TODO: PLAYER INPUT FOR TESTING PURPOSES
             if (InputManager.Instance.KeyDown(Keys.Left))
             {
-                player.Position = new Vector2((float)(player.Position.X - 80.0 * gameTime.ElapsedGameTime.TotalSeconds),
+                player.Position = new Vector2((float)(player.Position.X - PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds),
                     player.Position.Y);
+                playerMoving = true;
+                playerDirection.X = -1;
             }
-            if (InputManager.Instance.KeyDown(Keys.Right))
+            else if (InputManager.Instance.KeyDown(Keys.Right))
             {
-                player.Position = new Vector2((float)(player.Position.X + 80.0 * gameTime.ElapsedGameTime.TotalSeconds),
+                player.Position = new Vector2((float)(player.Position.X + PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds),
                     player.Position.Y);
+                playerMoving = true;
+                playerDirection.X = 1;
             }
+
             if (InputManager.Instance.KeyDown(Keys.Down))
             {
                 player.Position = new Vector2(player.Position.X,
-                    (float)(player.Position.Y + 80.0 * gameTime.ElapsedGameTime.TotalSeconds));
+                    (float)(player.Position.Y + PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds));
+                playerMoving = true;
+                playerDirection.Y = 1;
             }
-            if (InputManager.Instance.KeyDown(Keys.Up))
+            else if (InputManager.Instance.KeyDown(Keys.Up))
             {
                 player.Position = new Vector2(player.Position.X,
-                    (float)(player.Position.Y - 80.0 * gameTime.ElapsedGameTime.TotalSeconds));
+                    (float)(player.Position.Y - PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds));
+                playerMoving = true;
+                playerDirection.Y = -1;
+            }
+
+            if (!playerMoving)
+                player.Image.AnimationManager.StopAnimation();
+            else
+            {
+                // Determine which animation should be playing
+                if (playerDirection.X == 1)
+                {
+                    player.Image.AnimationManager.PlayAnimation("WalkRight");
+                }
+                else if (playerDirection.X == -1)
+                {
+                    player.Image.AnimationManager.PlayAnimation("WalkLeft");
+                }
+                else
+                {
+                    if (playerDirection.Y == 1)
+                    {
+                        player.Image.AnimationManager.PlayAnimation("WalkDown");
+                    }
+                    else if (playerDirection.Y == -1)
+                    {
+                        player.Image.AnimationManager.PlayAnimation("WalkUp");
+                    }
+                }
             }
         }
 

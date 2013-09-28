@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.GameScreens
 {
     /// <summary>
     /// Handles the active screen. Switching screens should happen through
@@ -121,7 +121,7 @@ namespace MonoGameRPG
                 currentScreen.UnloadContent();
 
             // Create instance of the new screen type
-            currentScreen = (GameScreen)Activator.CreateInstance(Type.GetType("MonoGameRPG." + newScreen));
+            currentScreen = (GameScreen)Activator.CreateInstance(Type.GetType("MonoGameRPG.GameScreens." + newScreen));
             // Load content for the new screen
             currentScreen.LoadContent(contentManager);
         }

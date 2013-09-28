@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.GameScreens
 {
     /// <summary>
     /// Base class for all game screens.

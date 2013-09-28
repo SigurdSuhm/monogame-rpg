@@ -1,12 +1,16 @@
 ﻿#region Using Statements
 
+using System;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using MonoGameRPG.Graphics;
+
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Gameplay
 {
     /// <summary>
     /// Class for individual tiles in a tile map.
@@ -15,10 +19,10 @@ namespace MonoGameRPG
     {
         #region Fields
 
-        // Path to the tile image
-        private string tileImagePath;
-        // Image for the tile
-        private Image tileImage;
+        // Image for the tile set
+        private TileSetImage tileSetImage;
+        // Source rectangle for drawing the tile
+        private Rectangle sourceRect;
 
         // Tile position
         private Vector2 position;
@@ -33,11 +37,20 @@ namespace MonoGameRPG
         public Vector2 Position
         {
             get { return position; }
-            set
-            {
-                position = value;
-                tileImage.Position = position;
-            }
+            set { position = value; }
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the source rectangle for the tile.
+        /// </summary>
+        public Rectangle SourceRect
+        {
+            get { return sourceRect; }
+            set { sourceRect = value; }
         }
 
         #endregion
@@ -45,12 +58,13 @@ namespace MonoGameRPG
         #region Constructors
 
         /// <summary>
-        /// Default constructor
+        /// Constructor creating the tile from an existing tile set image.
         /// </summary>
-        public Tile(string tileImagePath)
+        /// <param name="tileSetImage">Tile set image.</param>
+        public Tile(TileSetImage tileSetImage, int tileIndex)
         {
-            this.tileImagePath = tileImagePath;
-            tileImage = new Image(tileImagePath);
+            this.tileSetImage = tileSetImage;
+            sourceRect = tileSetImage.GetSourceRectangle(tileIndex);
         }
 
         #endregion
@@ -63,7 +77,7 @@ namespace MonoGameRPG
         /// <param name="contentManager">Content manager object.</param>
         public void LoadContent(ContentManager contentManager)
         {
-            tileImage.LoadContent(contentManager);
+            tileSetImage.LoadContent(contentManager);
         }
 
         /// <summary>
@@ -72,7 +86,7 @@ namespace MonoGameRPG
         /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            tileImage.Draw(spriteBatch);
+            tileSetImage.Draw(spriteBatch, position, sourceRect);
         }
 
         #endregion

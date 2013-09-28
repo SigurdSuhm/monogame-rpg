@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AnimationInfo>
+  <SpriteSheetDimensions>3,4</SpriteSheetDimensions>
+  <SpriteElementDimensions>32,32</SpriteElementDimensions>
+  <Animation>
+    <Name>WalkDown</Name>
+    <FrameCount>3</FrameCount>
+    <FrameIndices>0,1,2</FrameIndices>
+    <IdleFrameIndex>1</IdleFrameIndex>
+    <FrameLength>150</FrameLength>
+  </Animation>
+  <Animation>
+    <Name>WalkLeft</Name>
+    <FrameCount>3</FrameCount>
+    <FrameIndices>3,4,5</FrameIndices>
+    <IdleFrameIndex>4</IdleFrameIndex>
+    <FrameLength>150</FrameLength>
+  </Animation>
+  <Animation>
+    <Name>WalkRight</Name>
+    <FrameCount>3</FrameCount>
+    <FrameIndices>6,7,8</FrameIndices>
+    <IdleFrameIndex>7</IdleFrameIndex>
+    <FrameLength>150</FrameLength>
+  </Animation>
+  <Animation>
+    <Name>WalkUp</Name>
+    <FrameCount>3</FrameCount>
+    <FrameIndices>9,10,11</FrameIndices>
+    <IdleFrameIndex>10</IdleFrameIndex>
+    <FrameLength>150</FrameLength>
+  </Animation>
+</AnimationInfo>

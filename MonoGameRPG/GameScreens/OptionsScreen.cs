@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.GameScreens
 {
     /// <summary>
     /// Game screen used for options menu.

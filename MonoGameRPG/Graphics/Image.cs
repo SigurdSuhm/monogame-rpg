@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Graphics
 {
     /// <summary>
     /// Sprite class used for drawing 2D textures to the screen.
@@ -23,8 +23,10 @@ namespace MonoGameRPG
         // Texture path
         private string texturePath;
 
+        // Source rectangle defining what part of the image is drawn
+        private Rectangle sourceRect;
         // Dimensions of the texture
-        private Vector2 dimensions;
+        private Dimensions2 dimensions;
         // Image position on the screen
         private Vector2 position;
 
@@ -37,14 +39,26 @@ namespace MonoGameRPG
         // Dictionary containing image effects for the image
         private Dictionary<string, ImageEffect> imageEffectDictionary;
 
+        // Manager for sprite sheet animations
+        private AnimationManager animationManager;
+
         #endregion
 
         #region Properties
 
         /// <summary>
+        /// Gets or sets the source rectangle of the image.
+        /// </summary>
+        public Rectangle SourceRect
+        {
+            get { return sourceRect; }
+            set { sourceRect = value; }
+        }
+
+        /// <summary>
         /// Gets the dimensions of the image texture.
         /// </summary>
-        public Vector2 Dimensions
+        public Dimensions2 Dimensions
         {
             get { return dimensions; }
         }
@@ -76,6 +90,11 @@ namespace MonoGameRPG
             set { visible = value; }
         }
 
+        public AnimationManager AnimationManager
+        {
+            get { return animationManager; }
+        }
+
         #endregion
 
         #region Constructors
@@ -83,7 +102,7 @@ namespace MonoGameRPG
         /// <summary>
         /// Default image constructor.
         /// </summary>
-        /// <param name="texturePath"></param>
+        /// <param name="texturePath">Path to the image texture.</param>
         public Image(string texturePath)
         {
             this.texturePath = texturePath;
@@ -91,6 +110,8 @@ namespace MonoGameRPG
             alpha = 1.0f;
 
             imageEffectDictionary = new Dictionary<string, ImageEffect>();
+
+            animationManager = new AnimationManager(this);
         }
 
         #endregion
@@ -107,7 +128,9 @@ namespace MonoGameRPG
             texture = contentManager.Load<Texture2D>(texturePath);
 
             // Set image dimensions
-            dimensions = new Vector2(texture.Width, texture.Height);
+            dimensions = new Dimensions2(texture.Width, texture.Height);
+            // Set default source rectangle
+            sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
         }
 
         /// <summary>
@@ -125,6 +148,9 @@ namespace MonoGameRPG
         /// <param name="gameTime">Snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
+            // Update animation manager
+            animationManager.Update(gameTime);
+
             // Update each active image effect
             foreach (ImageEffect effect in imageEffectDictionary.Values)
             {
@@ -140,7 +166,18 @@ namespace MonoGameRPG
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw the image
-            spriteBatch.Draw(texture, position, Color.White * alpha);
+            spriteBatch.Draw(texture, position, sourceRect, Color.White * alpha);
+        }
+
+        /// <summary>
+        /// Draws the specified part of the image to the screen.
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
+        /// <param name="sourceRect">The part of the texture to draw.</param>
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, Rectangle imageSourceRect)
+        {
+            // Draw the image
+            spriteBatch.Draw(texture, position, imageSourceRect, Color.White * alpha);
         }
 
         /// <summary>

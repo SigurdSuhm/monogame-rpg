@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Graphics
 {
     /// <summary>
     /// A menu containing several menu items.
@@ -86,7 +86,7 @@ namespace MonoGameRPG
                 item.LoadContent(contentManager);
 
                 // Set menu item position and store current texture height
-                item.Position = new Vector2(0, previousImageYPosition);
+                item.Position = new Vector2(0 - (int)(item.Image.Dimensions.X / 2.0f), previousImageYPosition);
                 previousImageYPosition += (int)item.Image.Dimensions.Y;
             }
 

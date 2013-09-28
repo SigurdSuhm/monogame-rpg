@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Graphics
 {
     /// <summary>
     /// Represents individual items in a game menu.

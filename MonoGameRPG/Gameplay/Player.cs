@@ -6,19 +6,23 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using MonoGameRPG.Graphics;
+
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Gameplay
 {
     /// <summary>
     /// Represents the player in the gameplay screen.
     /// </summary>
-    public class Player : Entity
+    public class Player : Entity, IUpdateable
     {
         #region Constants
 
         // Path to the player texture
         private const string TEXTURE_PATH = "Textures/Player";
+        // Path to the animation Xml file
+        private const string ANIMATION_FILE_NAME = "Player.xml";
 
         #endregion
 
@@ -27,6 +31,14 @@ namespace MonoGameRPG
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets the image object associated with the player.
+        /// </summary>
+        public Image Image
+        {
+            get { return image; }
+        }
 
         #endregion
 
@@ -53,6 +65,9 @@ namespace MonoGameRPG
         public override void LoadContent(ContentManager contentManager)
         {
             base.LoadContent(contentManager);
+
+            // Load animation data
+            image.AnimationManager.LoadAnimationData(ANIMATION_FILE_NAME);
         }
 
         /// <summary>
@@ -61,6 +76,15 @@ namespace MonoGameRPG
         public override void UnloadContent()
         {
             base.UnloadContent();
+        }
+
+        /// <summary>
+        /// Update method called every frame.
+        /// </summary>
+        /// <param name="gameTime">Snapshot of timing values</param>
+        public void Update(GameTime gameTime)
+        {
+            image.Update(gameTime);
         }
 
         /// <summary>

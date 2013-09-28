@@ -4,9 +4,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using MonoGameRPG.Graphics;
+
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Gameplay
 {
     /// <summary>
     /// Base class used for game entities such as the play, enemies, etc.
@@ -16,7 +18,7 @@ namespace MonoGameRPG
         #region Fields
 
         // Entity position
-        protected Vector2 position;
+        private Vector2 position;
 
         // Entity image
         protected Image image;

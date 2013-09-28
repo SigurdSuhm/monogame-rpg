@@ -7,9 +7,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using MonoGameRPG.Graphics;
+
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.GameScreens
 {
     /// <summary>
     /// Game screen used for the main menu.
@@ -39,7 +41,8 @@ namespace MonoGameRPG
             : base()
         {
             menu = new Menu(MENU_ITEM_IDENTIFIERS, "Textures/MenuScreen");
-            menu.Position = new Vector2(100, 100);
+            menu.Position = new Vector2(BaseGame.Instance.GraphicsDevice.Viewport.Width / 2,
+                (BaseGame.Instance.GraphicsDevice.Viewport.Height / 2) - 120);
         }
 
         #endregion

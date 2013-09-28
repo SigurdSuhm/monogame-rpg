@@ -36,12 +36,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseGame.cs" />
+    <Compile Include="Dimensions2.cs" />
     <Compile Include="Gameplay\Entity.cs" />
     <Compile Include="Gameplay\Tile.cs" />
     <Compile Include="Gameplay\TileMap.cs" />
     <Compile Include="Gameplay\TileMapLoader.cs" />
+    <Compile Include="Graphics\Animation.cs" />
+    <Compile Include="Graphics\AnimationManager.cs" />
     <Compile Include="Graphics\ImageEffect.cs" />
     <Compile Include="Graphics\PulseEffect.cs" />
+    <Compile Include="Graphics\TileSetImage.cs" />
     <Compile Include="Interfaces\IDrawable.cs" />
     <Compile Include="Interfaces\IUpdateable.cs" />
     <Compile Include="GameScreens\OptionsScreen.cs" />
@@ -57,7 +61,6 @@
     <Compile Include="GameScreens\ScreenManager.cs" />
     <Compile Include="Graphics\Image.cs" />
     <Compile Include="GameScreens\SplashScreen.cs" />
-    <Compile Include="XmlManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
@@ -80,8 +83,11 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Maps\TestMap.xml" />
-    <Content Include="Content\Textures\Player.png">
+    <Content Include="Content\Animations\Player.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\Maps\TestMap.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\MenuScreen\Exit.png">
@@ -96,12 +102,20 @@
     <Content Include="Content\Textures\MenuScreen\Options.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Textures\Player.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Textures\SplashScreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\TileSets\Test.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Audio\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

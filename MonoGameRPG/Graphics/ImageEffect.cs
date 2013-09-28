@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Graphics
 {
     /// <summary>
     /// Base class for image effects.

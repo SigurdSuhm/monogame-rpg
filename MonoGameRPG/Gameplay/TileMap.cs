@@ -4,24 +4,28 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using MonoGameRPG.Graphics;
+
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Gameplay
 {
     /// <summary>
     /// Gameplay map consisting of graphical tiles.
     /// </summary>
-    public class TileMap : IDrawable
+    public class TileMap : IDrawable, IUpdateable
     {
         #region Fields
 
         // Tile map dimensions
-        private int[] dimensions = new int[2];
+        private Dimensions2 dimensions;
         // Size (height and width in pixels) of individual tiles
-        private int tileImageSize = 32;
+        private Dimensions2 tileDimensions;
 
         // Array of tiles
         private Tile[,] tileArray;
+        // Array of tile set images
+        private TileSetImage[] tileSetImageArray;
 
         #endregion
 
@@ -30,7 +34,7 @@ namespace MonoGameRPG
         /// <summary>
         /// Gets the dimensions of the tilemap.
         /// </summary>
-        public int[] Dimensions
+        public Dimensions2 Dimensions
         {
             get { return dimensions; }
         }
@@ -50,25 +54,13 @@ namespace MonoGameRPG
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public TileMap(int width, int height)
+        public TileMap(Dimensions2 dimensions, Dimensions2 tileDimensions, Tile[,] tileArray, TileSetImage[] tileSetImageArray)
         {
-            dimensions[0] = width;
-            dimensions[1] = height;
+            this.dimensions = dimensions;
+            this.tileDimensions = tileDimensions;
 
-            tileArray = new Tile[width, height];
-        }
-
-        /// <summary>
-        /// Creates a new tile map with a custom tile image size.
-        /// </summary>
-        public TileMap(int width, int height, int tileImageSize)
-        {
-            dimensions[0] = width;
-            dimensions[1] = height;
-
-            tileArray = new Tile[width, height];
-
-            this.tileImageSize = tileImageSize;
+            this.tileArray = tileArray;
+            this.tileSetImageArray = tileSetImageArray;
         }
 
         #endregion
@@ -81,14 +73,28 @@ namespace MonoGameRPG
         /// <param name="contentManager">Content manager object.</param>
         public void LoadContent(ContentManager contentManager)
         {
-            for (int i = 0; i < dimensions[0]; i++)
-            {
-                for (int j = 0; j < dimensions[1]; j++)
-                {
-                    // Sets the correct position for all tiles in the tile map
-                    tileArray[i, j].Position = new Vector2(tileImageSize * i, tileImageSize * j);
-                }
-            }
+            foreach (TileSetImage tileSet in tileSetImageArray)
+                tileSet.LoadContent(contentManager);
+        }
+
+        /// <summary>
+        /// Unloads all content associated with the tile map.
+        /// </summary>
+        public void UnloadContent()
+        {
+            foreach (TileSetImage image in tileSetImageArray)
+                image.UnloadContent();
+        }
+
+        /// <summary>
+        /// Update method called every game frame.
+        /// </summary>
+        /// <param name="gameTime">Snapshot of timing value.</param>
+        public void Update(GameTime gameTime)
+        {
+            // Update all tile set images
+            foreach (TileSetImage image in tileSetImageArray)
+                image.Update(gameTime);
         }
 
         /// <summary>
@@ -98,8 +104,13 @@ namespace MonoGameRPG
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw the entire tile array
-            foreach (Tile tile in tileArray)
-                tile.Draw(spriteBatch);
+            for (int i = 0; i < dimensions.X; i++)
+            {
+                for (int j = 0; j < dimensions.Y; j++)
+                {
+                    tileArray[i, j].Draw(spriteBatch);
+                }
+            }
         }
 
         #endregion

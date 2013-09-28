@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Graphics
 {
     /// <summary>
     /// Pulse effect making the image alpha go between 0 and 1.
