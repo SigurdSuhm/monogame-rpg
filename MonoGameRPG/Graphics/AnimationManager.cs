@@ -84,44 +84,39 @@ namespace MonoGameRPG.Graphics
             XmlNode animationInfoParentNode = animationFile.DocumentElement;
             XmlNodeList animationNodeList = animationInfoParentNode.ChildNodes;
 
+            // Parse sprite sheet dimensions
+            string[] dimensionsSplitString = animationInfoParentNode["SpriteSheetDimensions"].InnerText.Split(',');
+            spriteSheetDimensions.X = int.Parse(dimensionsSplitString[0]);
+            spriteSheetDimensions.Y = int.Parse(dimensionsSplitString[1]);
+
+            // Parse sprite element dimensions
+            string[] elementDimensionsSplitString = animationInfoParentNode["SpriteElementDimensions"].InnerText.Split(',');
+            spriteElementDimensions.X = int.Parse(elementDimensionsSplitString[0]);
+            spriteElementDimensions.Y = int.Parse(elementDimensionsSplitString[1]);
+
             // Create a new animation for each animation in the Xml file
-            foreach (XmlNode currentNode in animationNodeList)
+            foreach (XmlNode currentAnimationNode in animationInfoParentNode.SelectNodes("Animation"))
             {
-                if (currentNode.Name == "SpriteSheetDimensions")
+                Animation currentAnimation = new Animation();
+                string animationName = currentAnimationNode.SelectSingleNode("Name").InnerText;
+                currentAnimation.Name = animationName;
+
+                currentAnimation.FrameCount = int.Parse(currentAnimationNode.SelectSingleNode("FrameCount").InnerText);
+                currentAnimation.FrameLength = int.Parse(currentAnimationNode.SelectSingleNode("FrameLength").InnerText);
+                currentAnimation.IdleFrameIndex = int.Parse(currentAnimationNode.SelectSingleNode("IdleFrameIndex").InnerText);
+
+                // Get frame index string and create the appropriate number of indices
+                string[] frameIndices = currentAnimationNode.SelectSingleNode("FrameIndices").InnerText.Split(',');
+
+                currentAnimation.FrameIndexArray = new int[frameIndices.Length];
+
+                for (int i = 0; i < frameIndices.Length; i++)
                 {
-                    string[] splitString = currentNode.InnerText.Split(',');
-                    spriteSheetDimensions.X = int.Parse(splitString[0]);
-                    spriteSheetDimensions.Y = int.Parse(splitString[1]);
+                    currentAnimation.FrameIndexArray[i] = int.Parse(frameIndices[i]);
                 }
-                else if (currentNode.Name == "SpriteElementDimensions")
-                {
-                    string[] splitString = currentNode.InnerText.Split(',');
-                    spriteElementDimensions.X = int.Parse(splitString[0]);
-                    spriteElementDimensions.Y = int.Parse(splitString[1]);
-                }
-                else if (currentNode.Name == "Animation")
-                {
-                    Animation currentAnimation = new Animation();
-                    string animationName = currentNode.SelectSingleNode("Name").InnerText;
-                    currentAnimation.Name = animationName;
 
-                    currentAnimation.FrameCount = int.Parse(currentNode.SelectSingleNode("FrameCount").InnerText);
-                    currentAnimation.FrameLength = int.Parse(currentNode.SelectSingleNode("FrameLength").InnerText);
-                    currentAnimation.IdleFrameIndex = int.Parse(currentNode.SelectSingleNode("IdleFrameIndex").InnerText);
-
-                    // Get frame index string and create the appropriate number of indices
-                    string[] frameIndices = currentNode.SelectSingleNode("FrameIndices").InnerText.Split(',');
-
-                    currentAnimation.FrameIndexArray = new int[frameIndices.Length];
-
-                    for (int i = 0; i < frameIndices.Length; i++)
-                    {
-                        currentAnimation.FrameIndexArray[i] = int.Parse(frameIndices[i]);
-                    }
-
-                    // Add animation to the dictionary
-                    animationList.Add(animationName, currentAnimation);
-                }
+                // Add animation to the dictionary
+                animationList.Add(animationName, currentAnimation);
             }
 
             updateSourceRectangle(0);

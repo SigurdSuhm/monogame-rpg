@@ -6,6 +6,9 @@ using System;
 
 namespace MonoGameRPG
 {
+    /// <summary>
+    /// Describes dimensions in 2D by width and height.
+    /// </summary>
     public struct Dimensions2
     {
         #region Fields

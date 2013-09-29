@@ -160,6 +160,7 @@ namespace MonoGameRPG.Graphics
             image.AddEffect<PulseEffect>(ref pulseEffect, "PulseEffect");
             pulseEffect.MinAlpha = 0.2f;
             pulseEffect.PulseSpeed = 1.5f;
+            pulseEffect.ResetAlphaOnDeactivate = true;
             image.DeactivateEffect("PulseEffect");
         }
 

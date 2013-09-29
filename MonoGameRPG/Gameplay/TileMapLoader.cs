@@ -30,7 +30,6 @@ namespace MonoGameRPG.Gameplay
             tileSetFile.Load("Content/Maps/" + tileMapFilePath);
 
             XmlNode tileMapParentNode = tileSetFile.DocumentElement;
-            //XmlNodeList tilemapNodeList = tileMapParentNode.ChildNodes;
 
             // Array of tile set images
             TileSetImage[] tileSetArray = new TileSetImage[int.Parse(tileMapParentNode["TileSetCount"].InnerText)];

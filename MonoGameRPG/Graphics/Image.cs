@@ -105,7 +105,24 @@ namespace MonoGameRPG.Graphics
         /// <param name="texturePath">Path to the image texture.</param>
         public Image(string texturePath)
         {
+            texture = null;
             this.texturePath = texturePath;
+            position = Vector2.Zero;
+            alpha = 1.0f;
+
+            imageEffectDictionary = new Dictionary<string, ImageEffect>();
+
+            animationManager = new AnimationManager(this);
+        }
+
+        /// <summary>
+        /// Creates a new image from an existing texture.
+        /// </summary>
+        /// <param name="texture">Texture to use for the image.</param>
+        public Image(Texture2D texture)
+        {
+            this.texture = texture;
+            texturePath = String.Empty;
             position = Vector2.Zero;
             alpha = 1.0f;
 
@@ -124,13 +141,16 @@ namespace MonoGameRPG.Graphics
         /// <param name="contentManager">Content manager object.</param>
         public void LoadContent(ContentManager contentManager)
         {
-            // Load texture from the texture path
-            texture = contentManager.Load<Texture2D>(texturePath);
+            if (texture == null)
+            {
+                // Load texture from the texture path
+                texture = contentManager.Load<Texture2D>(texturePath);
+            }
 
             // Set image dimensions
             dimensions = new Dimensions2(texture.Width, texture.Height);
             // Set default source rectangle
-            sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
+            sourceRect = new Rectangle(0, 0, texture.Width, texture.Height); 
         }
 
         /// <summary>
@@ -193,7 +213,6 @@ namespace MonoGameRPG.Graphics
             
             (effect as ImageEffect).IsActive = true;
             (effect as ImageEffect).LoadContent(this);
-            
 
             // Add effect to dictionary
             imageEffectDictionary.Add(key, effect as ImageEffect);

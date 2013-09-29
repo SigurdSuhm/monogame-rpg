@@ -18,10 +18,20 @@ namespace MonoGameRPG.GameScreens
     /// </summary>
     public class SplashScreen : GameScreen
     {
+        #region Constants
+
+        // Number of milliseconds the screen should be shown
+        private const double SPLASH_SCREEN_DURATION = 3500;
+
+        #endregion
+
         #region Fields
 
         // Splash screen background
         private Image background;
+
+        // Number of milliseconds the splash screen has been shown
+        private double timeShown = 0;
 
         #endregion
 
@@ -65,8 +75,10 @@ namespace MonoGameRPG.GameScreens
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            timeShown += gameTime.ElapsedGameTime.TotalMilliseconds;
+
             // TODO: FOR TESTING PURPOSES
-            if (InputManager.Instance.KeyPressed(Keys.Space))
+            if (InputManager.Instance.KeyPressed(Keys.Space) || timeShown > SPLASH_SCREEN_DURATION)
             {
                 ScreenManager.Instance.ChangeScreen("MenuScreen");
             }

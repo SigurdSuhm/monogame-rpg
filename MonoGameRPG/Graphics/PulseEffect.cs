@@ -24,6 +24,9 @@ namespace MonoGameRPG.Graphics
         // Indicates if the alpha is currently increasing
         private bool increasing;
 
+        // Indicates if the alpha should reset when deactivated
+        private bool resetAlphaOnDeactivate = false;
+
         #endregion
 
         #region Properties
@@ -55,6 +58,15 @@ namespace MonoGameRPG.Graphics
             set { minAlpha = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the value determining if the alpha should reset when the effect is deactivated.
+        /// </summary>
+        public bool ResetAlphaOnDeactivate
+        {
+            get { return resetAlphaOnDeactivate; }
+            set { resetAlphaOnDeactivate = value; }
+        }
+
         #endregion
 
         #region Constructors
@@ -78,10 +90,45 @@ namespace MonoGameRPG.Graphics
         protected override void OnActiveStateChanged(bool newActiveState)
         {
             // Reset alpha when deactivated
-            if (newActiveState == false)
+            if (newActiveState == false && resetAlphaOnDeactivate)
                 image.Alpha = maxAlpha;
 
+            // Check if alpha should be increasing
+            if (image != null)
+            {
+                if (image.Alpha < ((maxAlpha - minAlpha) / 2.0f))
+                    increasing = true;
+                else
+                    increasing = false; 
+            }
+
             base.OnActiveStateChanged(newActiveState);
+        }
+
+        // Event called when the max alpha value is reached
+        public delegate void MaxAlphaReachedEventHandler();
+        public MaxAlphaReachedEventHandler MaxAlphaReached;
+
+        /// <summary>
+        /// Max alpha reached event.
+        /// </summary>
+        private void OnMaxAlphaReached()
+        {
+            if (MaxAlphaReached != null)
+                MaxAlphaReached();
+        }
+
+        // Event called when the min alpha value is reached
+        public delegate void MinAlphaReachedEventHandler();
+        public MinAlphaReachedEventHandler MinAlphaReached;
+
+        /// <summary>
+        /// Max alpha reached event.
+        /// </summary>
+        private void OnMinAlphaReached()
+        {
+            if (MinAlphaReached != null)
+                MinAlphaReached();
         }
 
         #endregion
@@ -121,6 +168,8 @@ namespace MonoGameRPG.Graphics
                 {
                     increasing = false;
                     image.Alpha = maxAlpha;
+
+                    OnMaxAlphaReached();
                 }
             }
             else
@@ -132,6 +181,8 @@ namespace MonoGameRPG.Graphics
                 {
                     increasing = true;
                     image.Alpha = minAlpha;
+
+                    OnMinAlphaReached();
                 }
             }
 
