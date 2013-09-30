@@ -14,8 +14,14 @@ namespace MonoGameRPG.Gameplay
     /// <summary>
     /// Loader class for importing a tile map from an Xml file.
     /// </summary>
-    public static class TileMapLoader
+    public static class TileMapFileHandler
     {
+        #region Constants
+
+        private const string MAPS_BASE_PATH = "Content/Maps/";
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -27,7 +33,7 @@ namespace MonoGameRPG.Gameplay
         {
             // Import Xml file as XmlDocument
             XmlDocument tileSetFile = new XmlDocument();
-            tileSetFile.Load("Content/Maps/" + tileMapFilePath);
+            tileSetFile.Load(MAPS_BASE_PATH + tileMapFilePath);
 
             XmlNode tileMapParentNode = tileSetFile.DocumentElement;
 
@@ -82,7 +88,7 @@ namespace MonoGameRPG.Gameplay
                     int tileSetIndex = int.Parse(tileDataSplitString[1]);
 
                     // Create tile object
-                    tileArray[x, y] = new Tile(tileSetArray[tileSetIndex], tileIndex);
+                    tileArray[x, y] = new Tile(tileSetArray[tileSetIndex], tileIndex, tileSetIndex);
                     tileArray[x, y].Position = new Vector2(x * tileSetArray[tileSetIndex].TileDimensions.X, y * tileSetArray[tileSetIndex].TileDimensions.Y);
                 }
             }
@@ -91,6 +97,73 @@ namespace MonoGameRPG.Gameplay
             TileMap tileMap = new TileMap(tileMapDimensions, tileDimensions, tileArray, tileSetArray);
 
             return tileMap;
+        }
+
+        /// <summary>
+        /// Saves an existing tile map to an Xml file.
+        /// </summary>
+        /// <param name="tileMap">Tile map to be saved.</param>
+        /// <param name="fileName">Xml file name.</param>
+        public static void SaveTileMap(TileMap tileMap, string fileName)
+        {
+            // Create XmlWriter object for writing to Xml
+            using (XmlWriter writer = XmlWriter.Create(MAPS_BASE_PATH + fileName))
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("TileMap");
+
+                // Write tile map dimensions
+                writer.WriteElementString("Dimensions", String.Format("{0},{1}", tileMap.Dimensions.X, tileMap.Dimensions.Y));
+                // Write tile element dimensions
+                writer.WriteElementString("TileDimensions", String.Format("{0},{1}", tileMap.TileDimensions.X,
+                    tileMap.TileDimensions.Y));
+
+                // Write number of tile sets
+                int tileSetCount = tileMap.TileSetImageArray.Length;
+                writer.WriteElementString("TileSetCount", tileSetCount.ToString());
+
+                // Write information on individual tile sets
+                for (int i = 0; i < tileSetCount; i++)
+                {
+                    writer.WriteStartElement("TileSet");
+
+                    // Index of the tile map
+                    writer.WriteElementString("Index", i.ToString());
+                    // File name of the tile set
+                    writer.WriteElementString("FileName", tileMap.TileSetImageArray[i].FileName);
+                    // Dimensions of the tile set
+                    writer.WriteElementString("Dimensions", String.Format("{0},{1}", tileMap.TileSetImageArray[i].TileSetDimensions.X,
+                        tileMap.TileSetImageArray[i].TileSetDimensions.Y));
+
+                    writer.WriteEndElement();
+                }
+
+                // Write rows of tiles
+                for (int y = 0; y < tileMap.TileArray.GetLength(1); y++)
+                {
+                    writer.WriteStartElement("Row");
+
+                    for (int x = 0; x < tileMap.TileArray.GetLength(0); x++)
+                    {
+                        string tileElementString = "[";
+                        tileElementString += tileMap.TileArray[x, y].TileIndex;
+                        tileElementString += ":";
+                        tileElementString += tileMap.TileArray[x, y].TileSetIndex;
+                        tileElementString += "]";
+
+                        // If this is not the last line in the row add a ';'
+                        if (x != (tileMap.TileArray.GetLength(0) - 1))
+                            tileElementString += ";";
+
+                        writer.WriteString(tileElementString);
+                    }
+
+                    writer.WriteEndElement();
+                }
+
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+            }
         }
 
         #endregion

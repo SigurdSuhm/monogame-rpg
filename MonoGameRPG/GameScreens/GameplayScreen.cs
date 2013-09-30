@@ -34,8 +34,8 @@ namespace MonoGameRPG.GameScreens
         // This halts all input related to player movement, AI etc.
         private bool paused = false;
 
-        // TODO: FOR TESTING PURPOSES
-        TileMap tileMap;
+        // Scene manager used for managing and changing scenes
+        private SceneManager sceneManager;
 
         #endregion
 
@@ -64,8 +64,11 @@ namespace MonoGameRPG.GameScreens
             player.LoadContent(contentManager);
             player.Image.AnimationManager.Looping = true;
 
-            tileMap = TileMapLoader.LoadTileMap("TestMap.xml");
-            tileMap.LoadContent(contentManager);
+            // Create scene manager object
+            sceneManager = new SceneManager();
+            sceneManager.LoadContent(contentManager);
+            // TODO: FOR TESTING PURPOSES
+            sceneManager.ChangeScene("TestScene");
 
             base.LoadContent(contentManager);
         }
@@ -75,8 +78,9 @@ namespace MonoGameRPG.GameScreens
         /// </summary>
         public override void UnloadContent()
         {
-            tileMap.UnloadContent();
             player.UnloadContent();
+
+            sceneManager.UnloadContent();
 
             base.UnloadContent();
         }
@@ -96,6 +100,9 @@ namespace MonoGameRPG.GameScreens
             if (InputManager.Instance.KeyPressed(Keys.Escape))
                 BaseGame.Instance.Exit();
 
+            // Update scene manager
+            sceneManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -105,8 +112,9 @@ namespace MonoGameRPG.GameScreens
         /// <param name="spriteBatch">Sprite batch object used for 2D renderin.</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            // Draw tile map
-            tileMap.Draw(spriteBatch);
+            // Draw current scene
+            sceneManager.Draw(spriteBatch);
+
             // Draw player object
             player.Draw(spriteBatch);
 

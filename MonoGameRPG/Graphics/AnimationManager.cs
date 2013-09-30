@@ -69,7 +69,7 @@ namespace MonoGameRPG.Graphics
 
         #endregion
 
-        #region Methods
+        #region File IO
 
         /// <summary>
         /// Loads animation information from an animation Xml file.
@@ -81,21 +81,21 @@ namespace MonoGameRPG.Graphics
             XmlDocument animationFile = new XmlDocument();
             animationFile.Load("Content/Animations/" + animationDataFilePath);
 
-            XmlNode animationInfoParentNode = animationFile.DocumentElement;
-            XmlNodeList animationNodeList = animationInfoParentNode.ChildNodes;
+            XmlNode animationParentNode = animationFile.DocumentElement;
+            XmlNodeList animationNodeList = animationParentNode.ChildNodes;
 
             // Parse sprite sheet dimensions
-            string[] dimensionsSplitString = animationInfoParentNode["SpriteSheetDimensions"].InnerText.Split(',');
+            string[] dimensionsSplitString = animationParentNode["SpriteSheetDimensions"].InnerText.Split(',');
             spriteSheetDimensions.X = int.Parse(dimensionsSplitString[0]);
             spriteSheetDimensions.Y = int.Parse(dimensionsSplitString[1]);
 
             // Parse sprite element dimensions
-            string[] elementDimensionsSplitString = animationInfoParentNode["SpriteElementDimensions"].InnerText.Split(',');
+            string[] elementDimensionsSplitString = animationParentNode["SpriteElementDimensions"].InnerText.Split(',');
             spriteElementDimensions.X = int.Parse(elementDimensionsSplitString[0]);
             spriteElementDimensions.Y = int.Parse(elementDimensionsSplitString[1]);
 
             // Create a new animation for each animation in the Xml file
-            foreach (XmlNode currentAnimationNode in animationInfoParentNode.SelectNodes("Animation"))
+            foreach (XmlNode currentAnimationNode in animationParentNode.SelectNodes("Animation"))
             {
                 Animation currentAnimation = new Animation();
                 string animationName = currentAnimationNode.SelectSingleNode("Name").InnerText;
@@ -121,6 +121,10 @@ namespace MonoGameRPG.Graphics
 
             updateSourceRectangle(0);
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Update method called every game frame.

@@ -15,7 +15,7 @@ namespace MonoGameRPG.Gameplay
     /// <summary>
     /// Represents the player in the gameplay screen.
     /// </summary>
-    public class Player : Entity, IUpdateable
+    public class Player : Entity
     {
         #region Constants
 
@@ -82,7 +82,7 @@ namespace MonoGameRPG.Gameplay
         /// Update method called every frame.
         /// </summary>
         /// <param name="gameTime">Snapshot of timing values</param>
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             image.Update(gameTime);
         }

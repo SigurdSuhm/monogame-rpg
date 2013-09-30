@@ -19,6 +19,11 @@ namespace MonoGameRPG.Gameplay
     {
         #region Fields
 
+        // Index of the tile in the tile set
+        private int tileIndex;
+        // Index of the tile set used according to the tile map
+        private int tileSetIndex;
+
         // Image for the tile set
         private TileSetImage tileSetImage;
         // Source rectangle for drawing the tile
@@ -30,6 +35,22 @@ namespace MonoGameRPG.Gameplay
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets the index of the tile in the tile set.
+        /// </summary>
+        public int TileIndex
+        {
+            get { return tileIndex; }
+        }
+
+        /// <summary>
+        /// Gets the index of the used tile set according to the tile map.
+        /// </summary>
+        public int TileSetIndex
+        {
+            get { return tileSetIndex; }
+        }
 
         /// <summary>
         /// Gets or sets the position of the tile.
@@ -61,8 +82,10 @@ namespace MonoGameRPG.Gameplay
         /// Constructor creating the tile from an existing tile set image.
         /// </summary>
         /// <param name="tileSetImage">Tile set image.</param>
-        public Tile(TileSetImage tileSetImage, int tileIndex)
+        public Tile(TileSetImage tileSetImage, int tileIndex, int tileSetIndex)
         {
+            this.tileIndex = tileIndex;
+            this.tileSetIndex = tileSetIndex;
             this.tileSetImage = tileSetImage;
             sourceRect = tileSetImage.GetSourceRectangle(tileIndex);
         }

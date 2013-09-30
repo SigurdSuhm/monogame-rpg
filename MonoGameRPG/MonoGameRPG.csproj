@@ -38,9 +38,11 @@
     <Compile Include="BaseGame.cs" />
     <Compile Include="Dimensions2.cs" />
     <Compile Include="Gameplay\Entity.cs" />
+    <Compile Include="Gameplay\Scene.cs" />
+    <Compile Include="Gameplay\SceneManager.cs" />
     <Compile Include="Gameplay\Tile.cs" />
     <Compile Include="Gameplay\TileMap.cs" />
-    <Compile Include="Gameplay\TileMapLoader.cs" />
+    <Compile Include="Gameplay\TileMapFileHandler.cs" />
     <Compile Include="Graphics\Animation.cs" />
     <Compile Include="Graphics\AnimationManager.cs" />
     <Compile Include="Graphics\ImageEffect.cs" />
@@ -88,6 +90,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Maps\TestMap.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\Scenes\TestScene.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\MenuScreen\Exit.png">

@@ -1,5 +1,7 @@
 ﻿#region Using Statements
 
+using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,8 +26,8 @@ namespace MonoGameRPG.Gameplay
 
         // Array of tiles
         private Tile[,] tileArray;
-        // Array of tile set images
-        private TileSetImage[] tileSetImageArray;
+        // Dictionary of tile sets images
+        TileSetImage[] tileSetImageArray;
 
         #endregion
 
@@ -40,11 +42,27 @@ namespace MonoGameRPG.Gameplay
         }
 
         /// <summary>
+        /// Gets the dimensions of individual tile elements.
+        /// </summary>
+        public Dimensions2 TileDimensions
+        {
+            get { return tileDimensions; }
+        }
+
+        /// <summary>
         /// Gets the tile array associated with the tile map.
         /// </summary>
         public Tile[,] TileArray
         {
             get { return tileArray; }
+        }
+
+        /// <summary>
+        /// Gets the dictionary containing tile sets used in the tile map.
+        /// </summary>
+        public TileSetImage[] TileSetImageArray
+        {
+            get { return tileSetImageArray; }
         }
 
         #endregion
@@ -60,7 +78,9 @@ namespace MonoGameRPG.Gameplay
             this.tileDimensions = tileDimensions;
 
             this.tileArray = tileArray;
+
             this.tileSetImageArray = tileSetImageArray;
+
         }
 
         #endregion

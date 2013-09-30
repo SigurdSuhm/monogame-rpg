@@ -11,9 +11,9 @@ using MonoGameRPG.Graphics;
 namespace MonoGameRPG.Gameplay
 {
     /// <summary>
-    /// Base class used for game entities such as the play, enemies, etc.
+    /// Base class used for game entities such as the player, enemies, etc.
     /// </summary>
-    public abstract class Entity : IDrawable
+    public abstract class Entity : IDrawable, IUpdateable
     {
         #region Fields
 
@@ -84,6 +84,14 @@ namespace MonoGameRPG.Gameplay
             // Unload image object content
             if (image != null)
                 image.UnloadContent();
+        }
+
+        /// <summary>
+        /// Update method called every game frame.
+        /// </summary>
+        /// <param name="gameTime">Snapshot of timing values.</param>
+        public virtual void Update(GameTime gameTime)
+        {
         }
 
         /// <summary>

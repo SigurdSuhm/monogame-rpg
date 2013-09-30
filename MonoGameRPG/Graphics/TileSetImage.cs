@@ -10,6 +10,9 @@ namespace MonoGameRPG.Graphics
     {
         #region Fields
 
+        // Name of the tile set
+        private string fileName;
+
         // Dimensions (in tiles) of the tile set
         private Dimensions2 tileSetDimensions;
         // Dimensions of individual tiles in pixels
@@ -18,6 +21,14 @@ namespace MonoGameRPG.Graphics
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets the name of the tile set.
+        /// </summary>
+        public string FileName
+        {
+            get { return fileName; }
+        }
 
         /// <summary>
         /// Gets the dimensions of the tile set image in tiles.
@@ -46,6 +57,7 @@ namespace MonoGameRPG.Graphics
         public TileSetImage(string texturePath, Dimensions2 tileSetDimensions, Dimensions2 tileDimensions)
             : base("Textures/TileSets/" + texturePath)
         {
+            this.fileName = texturePath;
             this.tileSetDimensions = tileSetDimensions;
             this.tileDimensions = tileDimensions;
         }
