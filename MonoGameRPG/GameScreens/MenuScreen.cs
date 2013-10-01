@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Utility;
 
 #endregion
 
@@ -64,6 +65,8 @@ namespace MonoGameRPG.GameScreens
             menu.MenuItemDictionary["Exit"].Activated += exit_OnActivate;
 
             base.LoadContent(contentManager);
+
+            BaseGame.Instance.Logger.PostEntry(LogEntryType.Info, "Content loaded for menu screen.");
         }
                 
         /// <summary>
@@ -74,6 +77,8 @@ namespace MonoGameRPG.GameScreens
             menu.UnloadContent();
 
             base.UnloadContent();
+
+            BaseGame.Instance.Logger.PostEntry(LogEntryType.Info, "Content unloaded for menu screen.");
         }
 
         /// <summary>

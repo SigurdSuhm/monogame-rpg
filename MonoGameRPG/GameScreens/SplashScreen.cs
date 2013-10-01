@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Utility;
 
 #endregion
 
@@ -59,6 +60,8 @@ namespace MonoGameRPG.GameScreens
             background.LoadContent(contentManager);
 
             base.LoadContent(contentManager);
+
+            BaseGame.Instance.Logger.PostEntry(LogEntryType.Info, "Content loaded for splash screen.");
         }
 
         /// <summary>
@@ -67,6 +70,8 @@ namespace MonoGameRPG.GameScreens
         public override void UnloadContent()
         {
             base.UnloadContent();
+
+            BaseGame.Instance.Logger.PostEntry(LogEntryType.Info, "Content unloaded for splash screen.");
         }
 
         /// <summary>

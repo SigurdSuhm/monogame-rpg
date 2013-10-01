@@ -5,6 +5,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using MonoGameRPG.Graphics;
 
@@ -24,6 +25,9 @@ namespace MonoGameRPG.Gameplay
         // Path to the animation Xml file
         private const string ANIMATION_FILE_NAME = "Player.xml";
 
+        // TODO: FOR TESTING PURPOSES
+        private const float PLAYER_SPEED = 120.0f;
+
         #endregion
 
         #region Fields
@@ -31,14 +35,6 @@ namespace MonoGameRPG.Gameplay
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets the image object associated with the player.
-        /// </summary>
-        public Image Image
-        {
-            get { return image; }
-        }
 
         #endregion
 
@@ -84,7 +80,10 @@ namespace MonoGameRPG.Gameplay
         /// <param name="gameTime">Snapshot of timing values</param>
         public override void Update(GameTime gameTime)
         {
-            image.Update(gameTime);
+            // Handle player input
+            handleInput(gameTime);
+
+            base.Update(gameTime);
         }
 
         /// <summary>
@@ -95,6 +94,81 @@ namespace MonoGameRPG.Gameplay
         {
             // Draw image
             image.Draw(spriteBatch);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Handles all player movement based on input.
+        /// </summary>
+        /// <param name="gameTime">Snapshot of timing values.</param>
+        private void handleInput(GameTime gameTime)
+        {
+            // Indicates if the player is moving this frame
+            bool playerMoving = false;
+            // Vector describing the current player direction - Used for animation
+            Vector2 playerDirection;
+            playerDirection.X = 0;
+            playerDirection.Y = 0;
+
+            // TODO: PLAYER INPUT FOR TESTING PURPOSES
+            if (InputManager.Instance.KeyDown(Keys.Left))
+            {
+                Position = new Vector2((float)(Position.X - PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds),
+                    Position.Y);
+                playerMoving = true;
+                playerDirection.X = -1;
+            }
+            else if (InputManager.Instance.KeyDown(Keys.Right))
+            {
+                Position = new Vector2((float)(Position.X + PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds),
+                    Position.Y);
+                playerMoving = true;
+                playerDirection.X = 1;
+            }
+
+            if (InputManager.Instance.KeyDown(Keys.Down))
+            {
+                Position = new Vector2(Position.X,
+                    (float)(Position.Y + PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds));
+                playerMoving = true;
+                playerDirection.Y = 1;
+            }
+            else if (InputManager.Instance.KeyDown(Keys.Up))
+            {
+                Position = new Vector2(Position.X,
+                    (float)(Position.Y - PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds));
+                playerMoving = true;
+                playerDirection.Y = -1;
+            }
+
+            if (!playerMoving)
+                image.AnimationManager.StopAnimation();
+            else
+            {
+                // Determine which animation should be playing
+                if (playerDirection.X == 1)
+                {
+                    image.AnimationManager.PlayAnimation("WalkRight");
+                }
+                else if (playerDirection.X == -1)
+                {
+                    image.AnimationManager.PlayAnimation("WalkLeft");
+                }
+                else
+                {
+                    if (playerDirection.Y == 1)
+                    {
+                        image.AnimationManager.PlayAnimation("WalkDown");
+                    }
+                    else if (playerDirection.Y == -1)
+                    {
+                        image.AnimationManager.PlayAnimation("WalkUp");
+                    }
+                }
+            }
         }
 
         #endregion

@@ -1,4 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Scene>
   <TileMap>TestMap.xml</TileMap>
+  <Entity>
+    <Type>Player</Type>
+    <Position>0,0</Position>
+  </Entity>
 </Scene>

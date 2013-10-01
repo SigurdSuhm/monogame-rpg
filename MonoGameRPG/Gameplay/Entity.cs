@@ -40,6 +40,14 @@ namespace MonoGameRPG.Gameplay
             }
         }
 
+        /// <summary>
+        /// Gets the image object associated with the entity.
+        /// </summary>
+        public Image Image
+        {
+            get { return image; }
+        }
+
         #endregion
 
         #region Constructors
@@ -92,6 +100,7 @@ namespace MonoGameRPG.Gameplay
         /// <param name="gameTime">Snapshot of timing values.</param>
         public virtual void Update(GameTime gameTime)
         {
+            image.Update(gameTime);
         }
 
         /// <summary>

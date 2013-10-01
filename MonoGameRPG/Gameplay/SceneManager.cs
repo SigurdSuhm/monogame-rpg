@@ -71,7 +71,7 @@ namespace MonoGameRPG.Gameplay
         }
 
         /// <summary>
-        /// Changes the current scene to a new one.
+        /// Changes the current scene to a new one. Also unloads content for the old scene and loads content for the new scene.
         /// </summary>
         /// <param name="newSceneName">Name of the new scene.</param>
         public void ChangeScene(string newSceneName)
@@ -91,12 +91,22 @@ namespace MonoGameRPG.Gameplay
 
             // Get parent node and child node list
             XmlNode sceneParentNode = sceneFile.DocumentElement;
-            XmlNodeList sceneNodeList = sceneParentNode.ChildNodes;
 
             // Get tile map information
             string tileMapPath = sceneParentNode["TileMap"].InnerText;
 
+            // Get all entity nodes
+            XmlNodeList entityNodeList = sceneParentNode.SelectNodes("Entity");
+
             Scene newScene = new Scene(tileMapPath);
+
+            // Process entity nodes according to type
+            foreach (XmlNode entityNode in entityNodeList)
+            {
+                Entity entity = loadEntity(entityNode);
+                newScene.EntityList.Add(entity);
+            }
+
             newScene.LoadContent(contentManager);
 
             currentScene = newScene;
@@ -122,6 +132,36 @@ namespace MonoGameRPG.Gameplay
             // Draw current scene
             if (currentScene != null)
                 currentScene.Draw(spriteBatch);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Returns an entity object from an Xml node.
+        /// </summary>
+        /// <param name="entityNode">Xml node to parse.</param>
+        /// <returns>Entity object parsed from Xml.</returns>
+        private Entity loadEntity(XmlNode entityNode)
+        {
+            // Get entity type
+            string type = entityNode["Type"].InnerText;
+
+            if (type == "Player")
+            {
+                Player player = new Player();
+                // Set looping flag for animations
+                player.Image.AnimationManager.Looping = true;
+
+                // Get and set player initial position in the scene
+                string[] positionSplitString = entityNode["Position"].InnerText.Split(',');
+                player.Position = new Vector2(int.Parse(positionSplitString[0]), int.Parse(positionSplitString[1]));
+
+                return player;
+            }
+
+            throw new ArgumentException("Could not parse entity Xml node of type " + type);
         }
 
         #endregion

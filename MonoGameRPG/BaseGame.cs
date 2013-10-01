@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 
 using MonoGameRPG.GameScreens;
+using MonoGameRPG.Utility;
 
 #endregion
 
@@ -24,12 +25,36 @@ namespace MonoGameRPG
         #region Fields
 
         // Global game instance
-        public static Game Instance;
+        private static BaseGame instance;
 
         // Game graphics device
         private GraphicsDeviceManager graphics;
         // Game sprite batch used for drawing 2D textures
         private SpriteBatch spriteBatch;
+
+        // Logger object for the general game log
+        // Log file is saved to 'log.txt'
+        private Logger logger;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets the instance of the game.
+        /// </summary>
+        public static BaseGame Instance
+        {
+            get { return instance; }
+        }
+
+        /// <summary>
+        /// Gets the logger created by the base game.
+        /// </summary>
+        public Logger Logger
+        {
+            get { return logger; }
+        }
 
         #endregion
 
@@ -43,6 +68,9 @@ namespace MonoGameRPG
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            logger = new Logger();
+            logger.PostEntry(LogEntryType.Info, "Game starting.");
         }
 
         #endregion
@@ -60,7 +88,7 @@ namespace MonoGameRPG
             // Set default window properties
             Window.Title = "MonoGame RPG";
 
-            Instance = this;
+            instance = this;
 
             base.Initialize();
         }
@@ -91,6 +119,10 @@ namespace MonoGameRPG
             ScreenManager.Instance.UnloadContent();
 
             Content.Unload();
+
+            // Log final entry and flush log file
+            logger.PostEntry(LogEntryType.Info, "Game is exiting.");
+            logger.FlushToFile();
         }
 
         /// <summary>

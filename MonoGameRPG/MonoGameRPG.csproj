@@ -63,6 +63,9 @@
     <Compile Include="GameScreens\ScreenManager.cs" />
     <Compile Include="Graphics\Image.cs" />
     <Compile Include="GameScreens\SplashScreen.cs" />
+    <Compile Include="Utility\LogEntry.cs" />
+    <Compile Include="Utility\LogEntryType.cs" />
+    <Compile Include="Utility\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
