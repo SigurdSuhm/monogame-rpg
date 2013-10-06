@@ -6,6 +6,7 @@ using System.Xml;
 using Microsoft.Xna.Framework;
 
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Physics;
 
 #endregion
 
@@ -87,8 +88,12 @@ namespace MonoGameRPG.Gameplay
                     int tileIndex = int.Parse(tileDataSplitString[0]);
                     int tileSetIndex = int.Parse(tileDataSplitString[1]);
 
+                    CollisionValue tileCollision = CollisionValue.None;
+                    if (tileDataSplitString[2] == "1")
+                        tileCollision = CollisionValue.Solid;
+
                     // Create tile object
-                    tileArray[x, y] = new Tile(tileSetArray[tileSetIndex], tileIndex, tileSetIndex);
+                    tileArray[x, y] = new Tile(tileSetArray[tileSetIndex], tileIndex, tileSetIndex, tileCollision);
                     tileArray[x, y].Position = new Vector2(x * tileSetArray[tileSetIndex].TileDimensions.X, y * tileSetArray[tileSetIndex].TileDimensions.Y);
                 }
             }
@@ -149,6 +154,18 @@ namespace MonoGameRPG.Gameplay
                         tileElementString += tileMap.TileArray[x, y].TileIndex;
                         tileElementString += ":";
                         tileElementString += tileMap.TileArray[x, y].TileSetIndex;
+                        tileElementString += ":";
+
+                        switch (tileMap.TileArray[x, y].CollisionValue)
+                        {
+                            case CollisionValue.Solid:
+                                tileElementString += "1";
+                                break;
+                            default:
+                                tileElementString += "0";
+                                break;
+                        }
+
                         tileElementString += "]";
 
                         // If this is not the last line in the row add a ';'

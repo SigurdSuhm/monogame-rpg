@@ -17,6 +17,9 @@ namespace MonoGameRPG.Gameplay
     {
         #region Fields
 
+        // Unique name used for active entities
+        private string name;
+
         // Entity position
         private Vector2 position;
 
@@ -28,16 +31,20 @@ namespace MonoGameRPG.Gameplay
         #region Properties
 
         /// <summary>
+        /// Gets the name of the entity.
+        /// </summary>
+        public string Name
+        {
+            get { return name; }
+        }
+
+        /// <summary>
         /// Gets or sets the position of the entity.
         /// </summary>
         public Vector2 Position
         {
             get { return position; }
-            set 
-            { 
-                position = value;
-                image.Position = position;
-            }
+            set { position = value; }
         }
 
         /// <summary>
@@ -55,8 +62,9 @@ namespace MonoGameRPG.Gameplay
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public Entity()
+        public Entity(string name)
         {
+            this.name = name;
             position = Vector2.Zero;
         }
 
@@ -64,8 +72,9 @@ namespace MonoGameRPG.Gameplay
         /// Constructor with initial position value.
         /// </summary>
         /// <param name="position">Initial position of the entity.</param>
-        public Entity(Vector2 position)
+        public Entity(string name, Vector2 position)
         {
+            this.name = name;
             this.position = position;
         }
 
@@ -111,7 +120,7 @@ namespace MonoGameRPG.Gameplay
         {
             // Draw image object
             if (image != null)
-                image.Draw(spriteBatch);
+                image.Draw(spriteBatch, position);
         }
 
         #endregion

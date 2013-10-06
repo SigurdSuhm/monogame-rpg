@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Physics;
 
 #endregion
 
@@ -31,6 +32,10 @@ namespace MonoGameRPG.Gameplay
 
         // Tile position
         private Vector2 position;
+        // Dimensions of the tile
+        private Dimensions2 dimensions;
+        // Collision value of the tile
+        private CollisionValue collisionValue;
 
         #endregion
 
@@ -61,6 +66,22 @@ namespace MonoGameRPG.Gameplay
             set { position = value; }
         }
 
+        /// <summary>
+        /// Gets the dimensions of the tile.
+        /// </summary>
+        public Dimensions2 Dimensions
+        {
+            get { return dimensions; }
+        }
+
+        /// <summary>
+        /// Gets the collision value of the tile.
+        /// </summary>
+        public CollisionValue CollisionValue
+        {
+            get { return collisionValue; }
+        }
+
         #endregion
 
         #region Properties
@@ -82,12 +103,15 @@ namespace MonoGameRPG.Gameplay
         /// Constructor creating the tile from an existing tile set image.
         /// </summary>
         /// <param name="tileSetImage">Tile set image.</param>
-        public Tile(TileSetImage tileSetImage, int tileIndex, int tileSetIndex)
+        public Tile(TileSetImage tileSetImage, int tileIndex, int tileSetIndex, CollisionValue collisionValue)
         {
             this.tileIndex = tileIndex;
             this.tileSetIndex = tileSetIndex;
             this.tileSetImage = tileSetImage;
+            dimensions = tileSetImage.TileDimensions;
             sourceRect = tileSetImage.GetSourceRectangle(tileIndex);
+
+            this.collisionValue = collisionValue;
         }
 
         #endregion

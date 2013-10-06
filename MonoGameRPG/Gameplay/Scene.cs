@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGameRPG.Physics;
 
 #endregion
 
@@ -22,8 +23,10 @@ namespace MonoGameRPG.Gameplay
         private string tileMapPath;
         // Tile map used for the scene
         private TileMap tileMap;
-        // List of entities in the scene
-        private List<Entity> entityList;
+        // Dictionary of entities in the scene
+        private Dictionary<string, Entity> entityList;
+        // Contains snapshots of entity positions from last frame for collisions handling
+        private Dictionary<string, Vector2> prevEntityPositions;
 
         #endregion
 
@@ -32,7 +35,7 @@ namespace MonoGameRPG.Gameplay
         /// <summary>
         /// Gets the list of entities in the scene.
         /// </summary>
-        public List<Entity> EntityList
+        public Dictionary<string, Entity> EntityList
         {
             get { return entityList; }
         }
@@ -47,7 +50,8 @@ namespace MonoGameRPG.Gameplay
         public Scene(string tileMapPath)
         {
             this.tileMapPath = tileMapPath;
-            entityList = new List<Entity>();
+            entityList = new Dictionary<string, Entity>();
+            prevEntityPositions = new Dictionary<string, Vector2>();
         }
 
         #endregion
@@ -65,8 +69,12 @@ namespace MonoGameRPG.Gameplay
             tileMap.LoadContent(contentManager);
 
             // Load content for all entities
-            foreach (Entity entity in entityList)
+            foreach (Entity entity in entityList.Values)
+            {
                 entity.LoadContent(contentManager);
+                // Create previous position for entity
+                prevEntityPositions.Add(entity.Name, entity.Position);
+            }
         }
 
         /// <summary>
@@ -77,7 +85,7 @@ namespace MonoGameRPG.Gameplay
             tileMap.UnloadContent();
 
             // Unload content for all active entities
-            foreach (Entity entity in entityList)
+            foreach (Entity entity in entityList.Values)
                 entity.UnloadContent();
         }
 
@@ -90,8 +98,23 @@ namespace MonoGameRPG.Gameplay
             tileMap.Update(gameTime);
 
             // Update all active entities
-            foreach (Entity entity in entityList)
+            foreach (Entity entity in entityList.Values)
+            {
+                // Store old entity position before updating
+                prevEntityPositions[entity.Name] = entity.Position;
                 entity.Update(gameTime);
+
+                // Check for tile collision
+                foreach (Tile tile in tileMap.TileArray)
+                {
+                    if (tile.CollisionValue == CollisionValue.Solid)
+                    {
+                        // If a collision is found return to old entity position
+                        if (entity.CollidesWith(tile))
+                            entity.Position = prevEntityPositions[entity.Name];
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -103,7 +126,7 @@ namespace MonoGameRPG.Gameplay
             tileMap.Draw(spriteBatch);
 
             // Draw all active entities
-            foreach (Entity entity in entityList)
+            foreach (Entity entity in entityList.Values)
                 entity.Draw(spriteBatch);
         }
 

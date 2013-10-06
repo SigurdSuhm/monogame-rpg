@@ -98,15 +98,15 @@ namespace MonoGameRPG.Graphics
             foreach (XmlNode currentAnimationNode in animationParentNode.SelectNodes("Animation"))
             {
                 Animation currentAnimation = new Animation();
-                string animationName = currentAnimationNode.SelectSingleNode("Name").InnerText;
+                string animationName = currentAnimationNode["Name"].InnerText;
                 currentAnimation.Name = animationName;
 
-                currentAnimation.FrameCount = int.Parse(currentAnimationNode.SelectSingleNode("FrameCount").InnerText);
-                currentAnimation.FrameLength = int.Parse(currentAnimationNode.SelectSingleNode("FrameLength").InnerText);
-                currentAnimation.IdleFrameIndex = int.Parse(currentAnimationNode.SelectSingleNode("IdleFrameIndex").InnerText);
+                currentAnimation.FrameCount = int.Parse(currentAnimationNode["FrameCount"].InnerText);
+                currentAnimation.FrameLength = int.Parse(currentAnimationNode["FrameLength"].InnerText);
+                currentAnimation.IdleFrameIndex = int.Parse(currentAnimationNode["IdleFrameIndex"].InnerText);
 
                 // Get frame index string and create the appropriate number of indices
-                string[] frameIndices = currentAnimationNode.SelectSingleNode("FrameIndices").InnerText.Split(',');
+                string[] frameIndices = currentAnimationNode["FrameIndices"].InnerText.Split(',');
 
                 currentAnimation.FrameIndexArray = new int[frameIndices.Length];
 

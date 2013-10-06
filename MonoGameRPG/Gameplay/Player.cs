@@ -44,7 +44,7 @@ namespace MonoGameRPG.Gameplay
         /// Default constructor.
         /// </summary>
         public Player()
-            : base()
+            : base("Player")
         {
             // Create image object with texture path
             image = new Image(TEXTURE_PATH);
@@ -84,16 +84,6 @@ namespace MonoGameRPG.Gameplay
             handleInput(gameTime);
 
             base.Update(gameTime);
-        }
-
-        /// <summary>
-        /// Draws the player to the screen.
-        /// </summary>
-        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            // Draw image
-            image.Draw(spriteBatch);
         }
 
         #endregion

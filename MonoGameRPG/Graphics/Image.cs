@@ -27,6 +27,8 @@ namespace MonoGameRPG.Graphics
         private Rectangle sourceRect;
         // Dimensions of the texture
         private Dimensions2 dimensions;
+        // Dimensions of the image when drawn on screen
+        protected Dimensions2 screenDimensions;
         // Image position on the screen
         private Vector2 position;
 
@@ -52,7 +54,13 @@ namespace MonoGameRPG.Graphics
         public Rectangle SourceRect
         {
             get { return sourceRect; }
-            set { sourceRect = value; }
+            set 
+            { 
+                sourceRect = value;
+                // Update screen dimensions
+                screenDimensions.X = sourceRect.Width;
+                screenDimensions.Y = sourceRect.Height;
+            }
         }
 
         /// <summary>
@@ -61,6 +69,14 @@ namespace MonoGameRPG.Graphics
         public Dimensions2 Dimensions
         {
             get { return dimensions; }
+        }
+
+        /// <summary>
+        /// Gets the dimensions of the image on screen.
+        /// </summary>
+        public Dimensions2 ScreenDimensions
+        {
+            get { return screenDimensions; }
         }
 
         /// <summary>
@@ -149,6 +165,7 @@ namespace MonoGameRPG.Graphics
 
             // Set image dimensions
             dimensions = new Dimensions2(texture.Width, texture.Height);
+            screenDimensions = dimensions;
             // Set default source rectangle
             sourceRect = new Rectangle(0, 0, texture.Width, texture.Height); 
         }
@@ -184,6 +201,16 @@ namespace MonoGameRPG.Graphics
         /// </summary>
         /// <param name="spriteBatch">Sprite batch object for drawing the texture.</param>
         public void Draw(SpriteBatch spriteBatch)
+        {
+            // Draw the image
+            spriteBatch.Draw(texture, position, sourceRect, Color.White * alpha);
+        }
+
+        /// <summary>
+        /// Draws the specified part of the image to the screen.
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
+        public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             // Draw the image
             spriteBatch.Draw(texture, position, sourceRect, Color.White * alpha);

@@ -60,6 +60,8 @@ namespace MonoGameRPG.Graphics
             this.fileName = texturePath;
             this.tileSetDimensions = tileSetDimensions;
             this.tileDimensions = tileDimensions;
+
+            screenDimensions = tileDimensions;
         }
 
         #endregion

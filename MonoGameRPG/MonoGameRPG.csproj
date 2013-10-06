@@ -37,6 +37,8 @@
   <ItemGroup>
     <Compile Include="BaseGame.cs" />
     <Compile Include="Dimensions2.cs" />
+    <Compile Include="Physics\PhysicsExtensions.cs" />
+    <Compile Include="Physics\CollisionValue.cs" />
     <Compile Include="Gameplay\Entity.cs" />
     <Compile Include="Gameplay\Scene.cs" />
     <Compile Include="Gameplay\SceneManager.cs" />
@@ -98,6 +100,7 @@
     </Content>
     <Content Include="Content\Scenes\TestScene.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Textures\MenuScreen\Exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

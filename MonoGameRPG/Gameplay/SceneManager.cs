@@ -104,7 +104,7 @@ namespace MonoGameRPG.Gameplay
             foreach (XmlNode entityNode in entityNodeList)
             {
                 Entity entity = loadEntity(entityNode);
-                newScene.EntityList.Add(entity);
+                newScene.EntityList.Add(entity.Name, entity);
             }
 
             newScene.LoadContent(contentManager);
