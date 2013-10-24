@@ -37,11 +37,18 @@
   <ItemGroup>
     <Compile Include="BaseGame.cs" />
     <Compile Include="Dimensions2.cs" />
-    <Compile Include="Physics\PhysicsExtensions.cs" />
-    <Compile Include="Physics\CollisionValue.cs" />
+    <Compile Include="Gameplay\Enemy.cs" />
+    <Compile Include="Scene\CollisionCell.cs" />
+    <Compile Include="Scene\CollisionGrid.cs" />
+    <Compile Include="Scene\SceneNode.cs" />
+    <Compile Include="Graphics\GameplayUI.cs" />
+    <Compile Include="Physics\BoundingShape.cs" />
+    <Compile Include="Physics\BoundingCircle.cs" />
+    <Compile Include="Physics\BoundingBoxAA.cs" />
+    <Compile Include="Physics\TileCollisionValue.cs" />
     <Compile Include="Gameplay\Entity.cs" />
-    <Compile Include="Gameplay\Scene.cs" />
-    <Compile Include="Gameplay\SceneManager.cs" />
+    <Compile Include="Scene\Scene.cs" />
+    <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="Gameplay\Tile.cs" />
     <Compile Include="Gameplay\TileMap.cs" />
     <Compile Include="Gameplay\TileMapFileHandler.cs" />
@@ -90,6 +97,10 @@
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Animations\Enemy1.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Animations\Player.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -102,17 +113,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\Textures\MenuScreen\Exit.png">
+    <Content Include="Content\Textures\Enemies\Enemy1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\MenuScreen\Exit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\MenuScreen\LoadGame.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\MenuScreen\NewGame.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\MenuScreen\Options.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\Player.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -121,6 +135,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\TileSets\Test.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\UI\HealthBarFrame.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />

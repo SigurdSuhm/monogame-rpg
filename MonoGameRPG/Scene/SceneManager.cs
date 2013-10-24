@@ -7,9 +7,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using MonoGameRPG.Gameplay;
+using MonoGameRPG.Utility;
+
 #endregion
 
-namespace MonoGameRPG.Gameplay
+namespace MonoGameRPG.Scene
 {
     /// <summary>
     /// Scene manager class handling the functionality related to 
@@ -32,6 +35,9 @@ namespace MonoGameRPG.Gameplay
         // Reference to the content manager object
         private ContentManager contentManager;
 
+        // Logger object
+        private Logger logger;
+
         #endregion
 
         #region Properties
@@ -46,6 +52,7 @@ namespace MonoGameRPG.Gameplay
         public SceneManager()
         {
             currentScene = null;
+            logger = BaseGame.Instance.Logger;
         }
 
         #endregion
@@ -81,6 +88,8 @@ namespace MonoGameRPG.Gameplay
             if (!newSceneFileName.EndsWith(".xml"))
                 newSceneFileName += ".xml";
 
+            logger.PostEntry(LogEntryType.Info, "Loading scene from file: " + newSceneFileName);
+
             // Unload old scene
             if (currentScene != null)
                 currentScene.UnloadContent();
@@ -95,21 +104,45 @@ namespace MonoGameRPG.Gameplay
             // Get tile map information
             string tileMapPath = sceneParentNode["TileMap"].InnerText;
 
-            // Get all entity nodes
-            XmlNodeList entityNodeList = sceneParentNode.SelectNodes("Entity");
+            // Get all scene nodes
+            XmlNodeList sceneNodeList = sceneParentNode.SelectNodes("SceneNode");
 
             Scene newScene = new Scene(tileMapPath);
 
-            // Process entity nodes according to type
-            foreach (XmlNode entityNode in entityNodeList)
+            // Load individual scene nodes
+            foreach (XmlNode curSceneNode in sceneNodeList)
             {
-                Entity entity = loadEntity(entityNode);
-                newScene.EntityList.Add(entity.Name, entity);
+                SceneNode sceneNode = loadSceneNode(curSceneNode);
+
+                // Check for name duplicate
+                if (newScene.SceneNodeDictionary.ContainsKey(sceneNode.Name))
+                {
+                    throw new Exception("A scene node with the name " + sceneNode.Name + " already exists.");
+                }
+                newScene.SceneNodeDictionary.Add(sceneNode.Name, sceneNode);
+
+                logger.PostEntry(LogEntryType.Info, "Scene node " + sceneNode.Name + " loaded.");
             }
 
             newScene.LoadContent(contentManager);
 
+            // Get dimensions of the scene collision grid
+            string[] collisionGridDimensionsSplitString = sceneParentNode["CollisionGridDimensions"].InnerText.Split(',');
+            Dimensions2 collisionGridDimensions = new Dimensions2(int.Parse(collisionGridDimensionsSplitString[0]),
+                int.Parse(collisionGridDimensionsSplitString[1]));
+
+            newScene.CreateCollisionGrid(collisionGridDimensions);
+
             currentScene = newScene;
+        }
+
+        /// <summary>
+        /// Attempts to find an entity of type 'Player' in the entity list of the current scene.
+        /// </summary>
+        /// <returns>The first player object found in the current scene. Null if none was found.</returns>
+        public Player FindPlayerObject()
+        {
+            return (currentScene.SceneNodeDictionary["Player"] as Player);
         }
 
         /// <summary>
@@ -139,29 +172,35 @@ namespace MonoGameRPG.Gameplay
         #region Private Methods
 
         /// <summary>
-        /// Returns an entity object from an Xml node.
+        /// Loads a scene node from the given Xml node.
         /// </summary>
-        /// <param name="entityNode">Xml node to parse.</param>
-        /// <returns>Entity object parsed from Xml.</returns>
-        private Entity loadEntity(XmlNode entityNode)
+        /// <param name="sceneNodeXmlNode">Xml node for the scene node.</param>
+        /// <returns>New scene node.</returns>
+        private SceneNode loadSceneNode(XmlNode sceneNodeXmlNode)
         {
-            // Get entity type
-            string type = entityNode["Type"].InnerText;
+            // Get scene node type
+            string sceneNodeType = sceneNodeXmlNode["Type"].InnerText;
+            SceneNode sceneNode = null;
 
-            if (type == "Player")
+            // Load unqiue scene node name
+            string sceneNodeName;
+            if (sceneNodeXmlNode.SelectNodes("Name").Count != 0)
+                sceneNodeName = sceneNodeXmlNode["Name"].InnerText;
+
+            if (sceneNodeType == "Player")
             {
-                Player player = new Player();
-                // Set looping flag for animations
-                player.Image.AnimationManager.Looping = true;
-
-                // Get and set player initial position in the scene
-                string[] positionSplitString = entityNode["Position"].InnerText.Split(',');
-                player.Position = new Vector2(int.Parse(positionSplitString[0]), int.Parse(positionSplitString[1]));
-
-                return player;
+                sceneNode = new Player();
+            }
+            else
+            {
+                throw new ArgumentException("Could not load scene node of type " + sceneNodeType);
             }
 
-            throw new ArgumentException("Could not parse entity Xml node of type " + type);
+            // Load scene node position
+            string[] positionSplitString = sceneNodeXmlNode["Position"].InnerText.Split(',');
+            sceneNode.Position = new Vector2(float.Parse(positionSplitString[0]), float.Parse(positionSplitString[1]));
+
+            return sceneNode;
         }
 
         #endregion

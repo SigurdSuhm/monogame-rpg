@@ -88,9 +88,9 @@ namespace MonoGameRPG.Gameplay
                     int tileIndex = int.Parse(tileDataSplitString[0]);
                     int tileSetIndex = int.Parse(tileDataSplitString[1]);
 
-                    CollisionValue tileCollision = CollisionValue.None;
+                    TileCollisionValue tileCollision = TileCollisionValue.None;
                     if (tileDataSplitString[2] == "1")
-                        tileCollision = CollisionValue.Solid;
+                        tileCollision = TileCollisionValue.Solid;
 
                     // Create tile object
                     tileArray[x, y] = new Tile(tileSetArray[tileSetIndex], tileIndex, tileSetIndex, tileCollision);
@@ -158,7 +158,7 @@ namespace MonoGameRPG.Gameplay
 
                         switch (tileMap.TileArray[x, y].CollisionValue)
                         {
-                            case CollisionValue.Solid:
+                            case TileCollisionValue.Solid:
                                 tileElementString += "1";
                                 break;
                             default:

@@ -100,6 +100,15 @@ namespace MonoGameRPG
             }
         }
 
+        public static Dimensions2 operator *(Dimensions2 dimension1, Dimensions2 dimension2)
+        {
+            Dimensions2 returnValue;
+            returnValue.X = dimension1.X * dimension2.X;
+            returnValue.Y = dimension1.Y * dimension2.Y;
+
+            return returnValue;
+        }
+
         #endregion
     }
 }

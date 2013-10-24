@@ -8,7 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using MonoGameRPG.Gameplay;
+using MonoGameRPG.Graphics;
 using MonoGameRPG.Utility;
+using MonoGameRPG.Scene;
 
 #endregion
 
@@ -27,6 +29,8 @@ namespace MonoGameRPG.GameScreens
 
         // Scene manager used for managing and changing scenes
         private SceneManager sceneManager;
+        // Gameplay UI
+        private GameplayUI ui;
 
         #endregion
 
@@ -39,6 +43,7 @@ namespace MonoGameRPG.GameScreens
             : base()
         {
             sceneManager = new SceneManager();
+            ui = new GameplayUI();
         }
 
         #endregion
@@ -52,9 +57,11 @@ namespace MonoGameRPG.GameScreens
         public override void LoadContent(ContentManager contentManager)
         {
             sceneManager.LoadContent(contentManager);
+            ui.LoadContent(contentManager);
 
             // TODO: FOR TESTING PURPOSES
             sceneManager.ChangeScene("TestScene");
+            ui.Player = sceneManager.FindPlayerObject();
 
             base.LoadContent(contentManager);
 
@@ -85,6 +92,8 @@ namespace MonoGameRPG.GameScreens
 
             // Update scene manager
             sceneManager.Update(gameTime);
+            // Update UI
+            ui.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -92,11 +101,13 @@ namespace MonoGameRPG.GameScreens
         /// <summary>
         /// Draws the gameplay screen.
         /// </summary>
-        /// <param name="spriteBatch">Sprite batch object used for 2D renderin.</param>
+        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Draw current scene
             sceneManager.Draw(spriteBatch);
+            // Draw UI
+            ui.Draw(spriteBatch);
 
             base.Draw(spriteBatch);
         }

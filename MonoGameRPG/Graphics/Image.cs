@@ -31,6 +31,8 @@ namespace MonoGameRPG.Graphics
         protected Dimensions2 screenDimensions;
         // Image position on the screen
         private Vector2 position;
+        // Scale of the image
+        private Vector2 scale;
 
         // Image alpha value
         private float alpha;
@@ -89,6 +91,15 @@ namespace MonoGameRPG.Graphics
         }
 
         /// <summary>
+        /// Gets or sets the scale of the image.
+        /// </summary>
+        public Vector2 Scale
+        {
+            get { return scale; }
+            set { scale = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the alpha value of the image.
         /// </summary>
         public float Alpha
@@ -125,6 +136,7 @@ namespace MonoGameRPG.Graphics
             this.texturePath = texturePath;
             position = Vector2.Zero;
             alpha = 1.0f;
+            scale = Vector2.One;
 
             imageEffectDictionary = new Dictionary<string, ImageEffect>();
 
@@ -141,6 +153,7 @@ namespace MonoGameRPG.Graphics
             texturePath = String.Empty;
             position = Vector2.Zero;
             alpha = 1.0f;
+            scale = Vector2.One;
 
             imageEffectDictionary = new Dictionary<string, ImageEffect>();
 
@@ -167,7 +180,7 @@ namespace MonoGameRPG.Graphics
             dimensions = new Dimensions2(texture.Width, texture.Height);
             screenDimensions = dimensions;
             // Set default source rectangle
-            sourceRect = new Rectangle(0, 0, texture.Width, texture.Height); 
+            sourceRect = new Rectangle(0, 0, texture.Width, texture.Height);
         }
 
         /// <summary>
@@ -203,7 +216,8 @@ namespace MonoGameRPG.Graphics
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw the image
-            spriteBatch.Draw(texture, position, sourceRect, Color.White * alpha);
+            spriteBatch.Draw(texture, position, sourceRect, Color.White * alpha, 0.0f, 
+                Vector2.Zero, scale, SpriteEffects.None, 0.0f);
         }
 
         /// <summary>
@@ -213,7 +227,8 @@ namespace MonoGameRPG.Graphics
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             // Draw the image
-            spriteBatch.Draw(texture, position, sourceRect, Color.White * alpha);
+            spriteBatch.Draw(texture, position, sourceRect, Color.White * alpha, 0.0f,
+                Vector2.Zero, scale, SpriteEffects.None, 0.0f);
         }
 
         /// <summary>
@@ -224,7 +239,8 @@ namespace MonoGameRPG.Graphics
         public void Draw(SpriteBatch spriteBatch, Vector2 position, Rectangle imageSourceRect)
         {
             // Draw the image
-            spriteBatch.Draw(texture, position, imageSourceRect, Color.White * alpha);
+            spriteBatch.Draw(texture, position, imageSourceRect, Color.White * alpha, 0.0f,
+                Vector2.Zero, scale, SpriteEffects.None, 0.0f);
         }
 
         /// <summary>

@@ -35,7 +35,10 @@ namespace MonoGameRPG.Gameplay
         // Dimensions of the tile
         private Dimensions2 dimensions;
         // Collision value of the tile
-        private CollisionValue collisionValue;
+        private TileCollisionValue collisionValue;
+        // Bounding box for the tile
+        // TODO: Might need fixing
+        private BoundingBoxAA boundingBox;
 
         #endregion
 
@@ -63,7 +66,13 @@ namespace MonoGameRPG.Gameplay
         public Vector2 Position
         {
             get { return position; }
-            set { position = value; }
+            set 
+            { 
+                position = value;
+
+                // Create new bounding box
+                boundingBox = new BoundingBoxAA(position, new Vector2(dimensions.X, dimensions.Y) + position);
+            }
         }
 
         /// <summary>
@@ -77,9 +86,17 @@ namespace MonoGameRPG.Gameplay
         /// <summary>
         /// Gets the collision value of the tile.
         /// </summary>
-        public CollisionValue CollisionValue
+        public TileCollisionValue CollisionValue
         {
             get { return collisionValue; }
+        }
+
+        /// <summary>
+        /// Gets the bounding box for the tile.
+        /// </summary>
+        public BoundingBoxAA BoundingBox
+        {
+            get { return boundingBox; }
         }
 
         #endregion
@@ -103,7 +120,7 @@ namespace MonoGameRPG.Gameplay
         /// Constructor creating the tile from an existing tile set image.
         /// </summary>
         /// <param name="tileSetImage">Tile set image.</param>
-        public Tile(TileSetImage tileSetImage, int tileIndex, int tileSetIndex, CollisionValue collisionValue)
+        public Tile(TileSetImage tileSetImage, int tileIndex, int tileSetIndex, TileCollisionValue collisionValue)
         {
             this.tileIndex = tileIndex;
             this.tileSetIndex = tileSetIndex;
@@ -112,20 +129,13 @@ namespace MonoGameRPG.Gameplay
             sourceRect = tileSetImage.GetSourceRectangle(tileIndex);
 
             this.collisionValue = collisionValue;
+
+            boundingBox = new BoundingBoxAA(Vector2.Zero, new Vector2(dimensions.X, dimensions.Y));
         }
 
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Loads the content for the tile.
-        /// </summary>
-        /// <param name="contentManager">Content manager object.</param>
-        public void LoadContent(ContentManager contentManager)
-        {
-            tileSetImage.LoadContent(contentManager);
-        }
 
         /// <summary>
         /// Draws the tile to the screen.

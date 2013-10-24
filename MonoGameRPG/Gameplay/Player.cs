@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Physics;
 
 #endregion
 
@@ -32,9 +33,31 @@ namespace MonoGameRPG.Gameplay
 
         #region Fields
 
+        // Player health
+        private int currentHealth;
+        // Player maximum health
+        private int maxHealth;
+
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the health value of the player.
+        /// </summary>
+        public int CurrentHealth
+        {
+            get { return currentHealth; }
+            set { currentHealth = value; }
+        }
+
+        /// <summary>
+        /// Gets the max health of the player.
+        /// </summary>
+        public int MaxHealth
+        {
+            get { return maxHealth; }
+        }
 
         #endregion
 
@@ -48,6 +71,9 @@ namespace MonoGameRPG.Gameplay
         {
             // Create image object with texture path
             image = new Image(TEXTURE_PATH);
+
+            currentHealth = 100;
+            maxHealth = 100;
         }
 
         #endregion
@@ -64,14 +90,9 @@ namespace MonoGameRPG.Gameplay
 
             // Load animation data
             image.AnimationManager.LoadAnimationData(ANIMATION_FILE_NAME);
-        }
-
-        /// <summary>
-        /// Unloads all content associated with the player object.
-        /// </summary>
-        public override void UnloadContent()
-        {
-            base.UnloadContent();
+            // Create bounding box
+            BoundingShape = new BoundingBoxAA(Position, new Vector2(image.AnimationManager.SpriteElementDimensions.X,
+                image.AnimationManager.SpriteElementDimensions.Y) + Position);
         }
 
         /// <summary>

@@ -41,9 +41,9 @@ namespace MonoGameRPG.GameScreens
         public MenuScreen()
             : base()
         {
-            menu = new Menu(MENU_ITEM_IDENTIFIERS, "Textures/MenuScreen");
+            menu = new Menu(MENU_ITEM_IDENTIFIERS, "Textures/MenuScreen", 20);
             menu.Position = new Vector2(BaseGame.Instance.GraphicsDevice.Viewport.Width / 2,
-                (BaseGame.Instance.GraphicsDevice.Viewport.Height / 2) - 120);
+                (BaseGame.Instance.GraphicsDevice.Viewport.Height / 2) - 125);
         }
 
         #endregion

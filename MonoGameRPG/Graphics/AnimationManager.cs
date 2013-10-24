@@ -44,6 +44,14 @@ namespace MonoGameRPG.Graphics
         #region Properties
 
         /// <summary>
+        /// Gets the dimensions in pixels of the individual elements in the sprite sheet.
+        /// </summary>
+        public Dimensions2 SpriteElementDimensions
+        {
+            get { return spriteElementDimensions; }
+        }
+
+        /// <summary>
         /// Gets or sets the value determining if animations should loop.
         /// </summary>
         public bool Looping

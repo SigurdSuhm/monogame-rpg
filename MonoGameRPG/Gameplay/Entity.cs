@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Physics;
+using MonoGameRPG.Scene;
 
 #endregion
 
@@ -13,39 +15,18 @@ namespace MonoGameRPG.Gameplay
     /// <summary>
     /// Base class used for game entities such as the player, enemies, etc.
     /// </summary>
-    public abstract class Entity : IDrawable, IUpdateable
+    public abstract class Entity : SceneNode
     {
         #region Fields
 
-        // Unique name used for active entities
-        private string name;
-
-        // Entity position
-        private Vector2 position;
-
         // Entity image
         protected Image image;
+        // Bounding shape used for the entity
+        private BoundingShape boundingShape;
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets the name of the entity.
-        /// </summary>
-        public string Name
-        {
-            get { return name; }
-        }
-
-        /// <summary>
-        /// Gets or sets the position of the entity.
-        /// </summary>
-        public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
 
         /// <summary>
         /// Gets the image object associated with the entity.
@@ -53,6 +34,19 @@ namespace MonoGameRPG.Gameplay
         public Image Image
         {
             get { return image; }
+        }
+
+        /// <summary>
+        /// Gets the bounding shape associated with the entity.
+        /// </summary>
+        public BoundingShape BoundingShape
+        {
+            get { return boundingShape; }
+            protected set
+            {
+                boundingShape = value;
+                boundingShape.AttachToEntity(this);
+            }
         }
 
         #endregion
@@ -63,8 +57,8 @@ namespace MonoGameRPG.Gameplay
         /// Default constructor.
         /// </summary>
         public Entity(string name)
+            : base(name, false)
         {
-            this.name = name;
             position = Vector2.Zero;
         }
 
@@ -73,8 +67,8 @@ namespace MonoGameRPG.Gameplay
         /// </summary>
         /// <param name="position">Initial position of the entity.</param>
         public Entity(string name, Vector2 position)
+            : base(name, false)
         {
-            this.name = name;
             this.position = position;
         }
 
@@ -86,7 +80,7 @@ namespace MonoGameRPG.Gameplay
         /// Loads content for the entity.
         /// </summary>
         /// <param name="contentManager">Content manager object</param>
-        public virtual void LoadContent(ContentManager contentManager)
+        public override void LoadContent(ContentManager contentManager)
         {
             // Load image object content
             if (image != null)
@@ -96,7 +90,7 @@ namespace MonoGameRPG.Gameplay
         /// <summary>
         /// Unloads all content associated with the entity.
         /// </summary>
-        public virtual void UnloadContent()
+        public override void UnloadContent()
         {
             // Unload image object content
             if (image != null)
@@ -107,16 +101,20 @@ namespace MonoGameRPG.Gameplay
         /// Update method called every game frame.
         /// </summary>
         /// <param name="gameTime">Snapshot of timing values.</param>
-        public virtual void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             image.Update(gameTime);
+
+            // Update bounding shape
+            if (boundingShape != null)
+                boundingShape.Update(gameTime);
         }
 
         /// <summary>
         /// Draws the entity to the screen.
         /// </summary>
         /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             // Draw image object
             if (image != null)

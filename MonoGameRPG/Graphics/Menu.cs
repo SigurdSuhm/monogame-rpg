@@ -28,6 +28,9 @@ namespace MonoGameRPG.Graphics
         // This is used for determining if menu position is being applied to the menu items for the first time
         private bool menuItemsLoaded = false;
 
+        // Spacing between menu items
+        private int spacing;
+
         #endregion
 
         #region Properties
@@ -56,9 +59,10 @@ namespace MonoGameRPG.Graphics
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public Menu(string[] menuItemIdentifiers, string menuFolderName)
+        public Menu(string[] menuItemIdentifiers, string menuFolderName, int spacing)
         {
             menuItemDictionary = new Dictionary<string, MenuItem>();
+            this.spacing = spacing;
 
             // Load individual menu items
             foreach (string curMenuItem in menuItemIdentifiers)
@@ -87,7 +91,7 @@ namespace MonoGameRPG.Graphics
 
                 // Set menu item position and store current texture height
                 item.Position = new Vector2(0 - (int)(item.Image.Dimensions.X / 2.0f), previousImageYPosition);
-                previousImageYPosition += (int)item.Image.Dimensions.Y;
+                previousImageYPosition += (int)item.Image.Dimensions.Y + spacing;
             }
 
             // Update menu item positions and set the flag indicating that menu items have been loaded
