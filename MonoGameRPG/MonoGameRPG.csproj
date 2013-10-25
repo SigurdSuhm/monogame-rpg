@@ -72,6 +72,7 @@
     <Compile Include="GameScreens\ScreenManager.cs" />
     <Compile Include="Graphics\Image.cs" />
     <Compile Include="GameScreens\SplashScreen.cs" />
+    <Compile Include="Scene\StaticSceneNode.cs" />
     <Compile Include="Utility\LogEntry.cs" />
     <Compile Include="Utility\LogEntryType.cs" />
     <Compile Include="Utility\Logger.cs" />
@@ -144,6 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Audio\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Scene\StaticSceneNode.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

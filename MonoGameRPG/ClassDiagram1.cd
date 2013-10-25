@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MonoGameRPG.BaseGame" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEEAAAAIAAwACAAAAAAAAAABAAAgAQAAAAAAAAAQ=</HashCode>
+      <FileName>BaseGame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.InputManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIYgAAAABAAAgAAAAACAAAAAAABgAAAAZgAAIJBSAAA=</HashCode>
+      <FileName>InputManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Program" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Gameplay.Enemy" Collapsed="true">
+    <Position X="3" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAAACgAAAAAAAAAAAAgAAAIAIAAAAAAIAAgQ=</HashCode>
+      <FileName>Gameplay\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Gameplay.Entity" Collapsed="true">
+    <Position X="2" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEABAAAAAQgAAAAAAAAAAEAAAABAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Gameplay\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Gameplay.Player" Collapsed="true">
+    <Position X="0.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAIAAAACAAAAAAAAAQAAAAEAIAIAAAAAAABAAQ=</HashCode>
+      <FileName>Gameplay\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Gameplay.Tile" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAABgEgCgAAIAoBAGAAAABgAAAAAAABAAA=</HashCode>
+      <FileName>Gameplay\Tile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Gameplay.TileMap" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAUAgAAAAAAgAAAgAAAAIAAAAAAAAAAACAAAAAgGQ=</HashCode>
+      <FileName>Gameplay\TileMap.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Gameplay.TileMapFileHandler" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAACAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Gameplay\TileMapFileHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.GameScreens.GameplayScreen" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAEgAAAAAAAAAAAAAAAAAAAAAABAAAAAQ=</HashCode>
+      <FileName>GameScreens\GameplayScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.GameScreens.GameScreen" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>GameScreens\GameScreen.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MonoGameRPG.GameScreens.MenuScreen" Collapsed="true">
+    <Position X="1" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAGQAAAEAQAgAAAAAAAAgAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>GameScreens\MenuScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.GameScreens.OptionsScreen" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>GameScreens\OptionsScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.GameScreens.ScreenManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAgAgAABAAAAAAABgAAQASAAgQAAQAAQ=</HashCode>
+      <FileName>GameScreens\ScreenManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.GameScreens.SplashScreen" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAIAIAIAQ=</HashCode>
+      <FileName>GameScreens\SplashScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Graphics.AnimationManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQMAAYAAAAAUEACAAAAAAAAEACgIAAAEAIAAAAACAA=</HashCode>
+      <FileName>Graphics\AnimationManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Graphics.GameplayUI" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAQAAgAAQAABAAAAAQAAAAQ=</HashCode>
+      <FileName>Graphics\GameplayUI.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Graphics.Image" Collapsed="true">
+    <Position X="5.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgEAAACAAAAwAgAiIAIAICEMAAAhDIAAAQCAIQAAQ=</HashCode>
+      <FileName>Graphics\Image.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MonoGameRPG.Graphics.ImageEffect" Collapsed="true">
+    <Position X="0.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAFAAAAAAEAAAABAAEAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Graphics\ImageEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MonoGameRPG.Graphics.Menu" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAAAAIgAgIAAAIAAEAAAAAAAIAAAAAAAAAEQ=</HashCode>
+      <FileName>Graphics\Menu.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Graphics.MenuItem" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBFAAIAAAAAgBgIgBAIABAEAAAABEAAgAAAEAAAAQ=</HashCode>
+      <FileName>Graphics\MenuItem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Graphics.PulseEffect" Collapsed="true">
+    <Position X="0.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQIECAAABBAQAAAQEABAABARAAAAAgAAAAAAAQAAAQ=</HashCode>
+      <FileName>Graphics\PulseEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Graphics.TileSetImage" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAQAAAAAAAAAAAAAEAAAECAAABAgAA=</HashCode>
+      <FileName>Graphics\TileSetImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Physics.BoundingBoxAA" Collapsed="true">
+    <Position X="8" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAGAAAABAQAAAAEAAABAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Physics\BoundingBoxAA.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Physics.BoundingCircle" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwICAAACAAAAAAAAAAABAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Physics\BoundingCircle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Physics.BoundingShape" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAAAACCAAAAAAAABAAAAAAAAIAAAgAAAAAAACA=</HashCode>
+      <FileName>Physics\BoundingShape.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MonoGameRPG.Scene.CollisionCell" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgACAAMAAAABAAAAAAACCAAAAAgAAAAAAA=</HashCode>
+      <FileName>Scene\CollisionCell.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Scene.CollisionGrid" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAIBAAACAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Scene\CollisionGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Scene.Scene" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAACAAACgQEAgAAIAAAAAEAAAQAAAIIAAAEAAQ=</HashCode>
+      <FileName>Scene\Scene.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Scene.SceneManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAIAAAAggCAAAAAAAAAAgAAAAAAAAgQAAAAgQ=</HashCode>
+      <FileName>Scene\SceneManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonoGameRPG.Scene.SceneNode" Collapsed="true">
+    <Position X="2" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAAACAAgAgAAAAIQQIAACECAAAAAAAAQAAAAQ=</HashCode>
+      <FileName>Scene\SceneNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MonoGameRPG.Utility.LogEntry" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAACAAAAAAAAAAAAAAAAAAAABAAAAAQAAIAAAACA=</HashCode>
+      <FileName>Utility\LogEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoGameRPG.Utility.Logger" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACAAAAAAAAAAAAAAAAAAAAAACEAABAAAAAA=</HashCode>
+      <FileName>Utility\Logger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MonoGameRPG.Dimensions2" Collapsed="true">
+    <Position X="12.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAKAAAAAAAAQAAAAAAAAAAAAAAYIA=</HashCode>
+      <FileName>Dimensions2.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MonoGameRPG.Graphics.Animation" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAABAAQBAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Graphics\Animation.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="MonoGameRPG.IDrawable" Collapsed="true">
+    <Position X="10.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IDrawable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MonoGameRPG.IUpdateable" Collapsed="true">
+    <Position X="12.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IUpdateable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MonoGameRPG.Physics.TileCollisionValue" Collapsed="true">
+    <Position X="12.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAEAAAA=</HashCode>
+      <FileName>Physics\TileCollisionValue.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MonoGameRPG.Utility.LogEntryType" Collapsed="true">
+    <Position X="10.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Utility\LogEntryType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

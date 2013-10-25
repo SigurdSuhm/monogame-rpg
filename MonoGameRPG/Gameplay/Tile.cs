@@ -50,6 +50,11 @@ namespace MonoGameRPG.Gameplay
         public int TileIndex
         {
             get { return tileIndex; }
+            set 
+            { 
+                tileIndex = value;
+                sourceRect = tileSetImage.GetSourceRectangle(tileIndex);
+            }
         }
 
         /// <summary>
@@ -144,6 +149,16 @@ namespace MonoGameRPG.Gameplay
         public void Draw(SpriteBatch spriteBatch)
         {
             tileSetImage.Draw(spriteBatch, position, sourceRect);
+        }
+
+        /// <summary>
+        /// Draws the tile to the screen.
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
+        /// <param name="scenePosition">Position of the scene on screen.</param>
+        public void Draw(SpriteBatch spriteBatch, Vector2 scenePosition)
+        {
+            tileSetImage.Draw(spriteBatch, position + scenePosition, sourceRect);
         }
 
         #endregion

@@ -6,22 +6,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 using MonoGameRPG.Graphics;
 using MonoGameRPG.Physics;
-using MonoGameRPG.Scene;
 
 #endregion
 
-namespace MonoGameRPG.Gameplay
+namespace MonoGameRPG.Scene
 {
     /// <summary>
-    /// Base class used for game entities such as the player, enemies, etc.
+    /// Represents static scene nodes in a scene.
     /// </summary>
-    public abstract class Entity : SceneNode
+    public class StaticSceneNode : SceneNode
     {
         #region Fields
 
-        // Entity image
-        protected Image image;
-        // Bounding shape used for the entity
+        // Image used for the scene node
+        private Image image;
+        // Bounding shape for collision detection
         private BoundingShape boundingShape;
 
         #endregion
@@ -29,24 +28,11 @@ namespace MonoGameRPG.Gameplay
         #region Properties
 
         /// <summary>
-        /// Gets the image object associated with the entity.
+        /// Gets the image object associated with the scene node.
         /// </summary>
         public Image Image
         {
             get { return image; }
-        }
-
-        /// <summary>
-        /// Gets the bounding shape associated with the entity.
-        /// </summary>
-        public BoundingShape BoundingShape
-        {
-            get { return boundingShape; }
-            protected set
-            {
-                boundingShape = value;
-                boundingShape.AttachToEntity(this);
-            }
         }
 
         #endregion
@@ -54,21 +40,27 @@ namespace MonoGameRPG.Gameplay
         #region Constructors
 
         /// <summary>
-        /// Default constructor.
+        /// Creates a new static scene node from an image.
         /// </summary>
-        public Entity(string name)
-            : base(name, false)
+        /// <param name="name">Unique scene node name.</param>
+        /// <param name="image">Image for the scene node.</param>
+        public StaticSceneNode(string name, Image image)
+            : base(name, true)
         {
+            this.image = image;
             position = Vector2.Zero;
         }
 
         /// <summary>
-        /// Constructor with initial position value.
+        /// Creates a new static scene node from an image.
         /// </summary>
-        /// <param name="position">Initial position of the entity.</param>
-        public Entity(string name, Vector2 position)
-            : base(name, false)
+        /// <param name="name">Unique scene node name.</param>
+        /// <param name="image">Image for the scene node.</param>
+        /// <param name="position">Scene node position.</param>
+        public StaticSceneNode(string name, Image image, Vector2 position)
+            : base(name, true)
         {
+            this.image = image;
             this.position = position;
         }
 
@@ -77,43 +69,39 @@ namespace MonoGameRPG.Gameplay
         #region Methods
 
         /// <summary>
-        /// Loads content for the entity.
+        /// Loads content for the scene node.
         /// </summary>
-        /// <param name="contentManager">Content manager object</param>
+        /// <param name="contentManager">Content manager object.</param>
         public override void LoadContent(ContentManager contentManager)
         {
-            // Load image object content
             if (image != null)
                 image.LoadContent(contentManager);
         }
 
         /// <summary>
-        /// Unloads all content associated with the entity.
+        /// Unloads content for the scene node.
         /// </summary>
         public override void UnloadContent()
         {
-            // Unload image object content
             if (image != null)
                 image.UnloadContent();
         }
 
         /// <summary>
-        /// Update method called every game frame.
+        /// Update logic called every game frame.
         /// </summary>
         /// <param name="gameTime">Snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
-            image.Update(gameTime);
-
-            // Update bounding shape
-            if (boundingShape != null)
-                boundingShape.Update(gameTime);
+            // Update image object
+            if (image != null)
+                image.Update(gameTime);
         }
 
         /// <summary>
-        /// Draws the entity to the screen.
+        /// Draws the scene node.
         /// </summary>
-        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
+        /// <param name="spriteBatch">Sprite batch object user for 2D rendering.</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Draw image object
@@ -122,10 +110,10 @@ namespace MonoGameRPG.Gameplay
         }
 
         /// <summary>
-        /// Draws the scene node at a position relative to the scene.
+        /// Draws the scene node.
         /// </summary>
-        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
-        /// <param name="scenePosition">Position of the scene.</param>
+        /// <param name="spriteBatch">Sprite batch object user for 2D rendering.</param>
+        /// <param name="scenePosition"></param>
         public override void Draw(SpriteBatch spriteBatch, Vector2 scenePosition)
         {
             // Draw image object

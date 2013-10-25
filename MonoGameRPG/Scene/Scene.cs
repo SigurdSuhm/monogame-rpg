@@ -32,8 +32,20 @@ namespace MonoGameRPG.Scene
         // Contains snapshots of entity positions from last frame for collisions handling
         private Dictionary<string, Vector2> prevEntityPositions;
 
+        // Position of the scene on screen
+        private Vector2 position;
+        // Position dimensions of the scene
+        private Dimensions2 dimensions;
+
         // Collision grid used for narrowing down collision detection
         private CollisionGrid collisionGrid;
+
+        // Game screen viewport
+        private Viewport viewport;
+        // Scene position offset from the player
+        private Vector2 positionOffset;
+        // Scene position bounds
+        private Vector2 positionMinBounds, positionMaxBounds;
 
         #endregion
 
@@ -54,10 +66,20 @@ namespace MonoGameRPG.Scene
         /// <summary>
         /// Default constructor.
         /// </summary>
+        /// <param name="tileMapPath">Path to the tile map file.</param>
         public Scene(string tileMapPath)
         {
             collisionGrid = null;
             this.tileMapPath = tileMapPath;
+            position = Vector2.Zero;
+            dimensions = Dimensions2.Zero;
+
+            viewport = BaseGame.Instance.GraphicsDevice.Viewport;
+            positionOffset = new Vector2((viewport.Width / 2) - 16, (viewport.Height / 2) - 16);
+
+            positionMinBounds = Vector2.Zero;
+            positionMaxBounds = Vector2.Zero;
+
             sceneNodeDictionary = new Dictionary<string, SceneNode>();
             prevEntityPositions = new Dictionary<string, Vector2>();
         }
@@ -76,6 +98,9 @@ namespace MonoGameRPG.Scene
             tileMap = TileMapFileHandler.LoadTileMap(tileMapPath);
             tileMap.LoadContent(contentManager);
 
+            // Set scene dimensions
+            dimensions = tileMap.Dimensions * tileMap.TileDimensions;
+
             // Load content for all entities
             foreach (SceneNode node in sceneNodeDictionary.Values)
             {
@@ -88,6 +113,14 @@ namespace MonoGameRPG.Scene
                     prevEntityPositions.Add(entity.Name, entity.Position);
                 }
             }
+
+            positionMinBounds = new Vector2(0 - (dimensions.X - viewport.Width),
+                0 - (dimensions.Y - viewport.Height));
+
+            position = -sceneNodeDictionary["Player"].Position;
+            position += positionOffset;
+            position.X = MathHelper.Clamp(position.X, positionMinBounds.X, positionMaxBounds.X);
+            position.Y = MathHelper.Clamp(position.Y, positionMinBounds.Y, positionMaxBounds.Y);
         }
 
         /// <summary>
@@ -139,6 +172,12 @@ namespace MonoGameRPG.Scene
                     }
                 }
             }
+
+            // Update scene position
+            position = -sceneNodeDictionary["Player"].Position;
+            position += positionOffset;
+            position.X = MathHelper.Clamp(position.X, positionMinBounds.X, positionMaxBounds.X);
+            position.Y = MathHelper.Clamp(position.Y, positionMinBounds.Y, positionMaxBounds.Y);
         }
 
         /// <summary>
@@ -147,11 +186,11 @@ namespace MonoGameRPG.Scene
         /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
-            tileMap.Draw(spriteBatch);
+            tileMap.Draw(spriteBatch, position);
 
             // Draw all active entities
             foreach (SceneNode node in sceneNodeDictionary.Values)
-                node.Draw(spriteBatch);
+                node.Draw(spriteBatch, position);
         }
 
         /// <summary>

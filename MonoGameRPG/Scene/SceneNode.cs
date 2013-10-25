@@ -105,6 +105,13 @@ namespace MonoGameRPG.Scene
         public abstract void Draw(SpriteBatch spriteBatch);
 
         /// <summary>
+        /// Draws the scene node at a position relative to the scene.
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
+        /// <param name="scenePosition">Position of the scene.</param>
+        public abstract void Draw(SpriteBatch spriteBatch, Vector2 scenePosition);
+
+        /// <summary>
         /// Loads all content for the scene node.
         /// </summary>
         /// <param name="contentManager">Content manager object.</param>

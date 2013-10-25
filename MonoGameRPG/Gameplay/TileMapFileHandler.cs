@@ -19,6 +19,7 @@ namespace MonoGameRPG.Gameplay
     {
         #region Constants
 
+        // Base path for tile map files
         private const string MAPS_BASE_PATH = "Content/Maps/";
 
         #endregion
@@ -41,12 +42,6 @@ namespace MonoGameRPG.Gameplay
             // Array of tile set images
             TileSetImage[] tileSetArray = new TileSetImage[int.Parse(tileMapParentNode["TileSetCount"].InnerText)];
             
-            // Dimensions of the tile map
-            Dimensions2 tileMapDimensions;
-            string[] dimensionsSplitString = tileMapParentNode["Dimensions"].InnerText.Split(',');
-            tileMapDimensions.X = int.Parse(dimensionsSplitString[0]);
-            tileMapDimensions.Y = int.Parse(dimensionsSplitString[1]);
-
             // Parse tile dimensions
             string[] tileDimensionsSplitString = tileMapParentNode["TileDimensions"].InnerText.Split(',');
             Dimensions2 tileDimensions;
@@ -68,11 +63,22 @@ namespace MonoGameRPG.Gameplay
                 tileSetArray[tileSetIndex] = new TileSetImage(fileName, dimensions, tileDimensions);
             }
 
+            // Parse tile map data
+            XmlNodeList tileMapRowNodeList = tileMapParentNode["Data"].SelectNodes("Row");
+
+            // Dimensions of the tile map
+            Dimensions2 tileMapDimensions;
+            tileMapDimensions.Y = tileMapRowNodeList.Count;
+            tileMapDimensions.X = 1;
+            for (int i = 0; i < tileMapRowNodeList[0].InnerText.Length; i++)
+            {
+                if (tileMapRowNodeList[0].InnerText[i] == ';')
+                    tileMapDimensions.X++;
+            }
+
             // Array of tiles for the tile map
             Tile[,] tileArray = new Tile[tileMapDimensions.X, tileMapDimensions.Y];
 
-            // Parse tile map data
-            XmlNodeList tileMapRowNodeList = tileMapParentNode["Data"].SelectNodes("Row");
             for (int y = 0; y < tileMapDimensions.Y; y++)
             {
                 string[] tileRowSplitString = tileMapRowNodeList[y].InnerText.Split(';');

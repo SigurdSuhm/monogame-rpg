@@ -26,7 +26,7 @@ namespace MonoGameRPG.Gameplay
 
         // Array of tiles
         private Tile[,] tileArray;
-        // Dictionary of tile sets images
+        // Dictionary of tile set images
         TileSetImage[] tileSetImageArray;
 
         #endregion
@@ -34,7 +34,7 @@ namespace MonoGameRPG.Gameplay
         #region Properties
 
         /// <summary>
-        /// Gets the dimensions of the tilemap.
+        /// Gets the dimensions of the tile map.
         /// </summary>
         public Dimensions2 Dimensions
         {
@@ -72,6 +72,10 @@ namespace MonoGameRPG.Gameplay
         /// <summary>
         /// Default constructor.
         /// </summary>
+        /// <param name="dimensions">Dimensions of the tile map.</param>
+        /// <param name="tileDimensions">Dimensions of tile elements.</param>
+        /// <param name="tileArray">Array of tiles.</param>
+        /// <param name="tileSetImageArray">Array of tile set images.</param>
         public TileMap(Dimensions2 dimensions, Dimensions2 tileDimensions, Tile[,] tileArray, TileSetImage[] tileSetImageArray)
         {
             this.dimensions = dimensions;
@@ -80,7 +84,6 @@ namespace MonoGameRPG.Gameplay
             this.tileArray = tileArray;
 
             this.tileSetImageArray = tileSetImageArray;
-
         }
 
         #endregion
@@ -129,6 +132,23 @@ namespace MonoGameRPG.Gameplay
                 for (int j = 0; j < dimensions.Y; j++)
                 {
                     tileArray[i, j].Draw(spriteBatch);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws the entire tile map to the screen.
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch object used for 2D rendering.</param>
+        /// <param name="scenePosition">Position of the scene on screen.</param>
+        public void Draw(SpriteBatch spriteBatch, Vector2 scenePosition)
+        {
+            // Draw the entire tile array
+            for (int i = 0; i < dimensions.X; i++)
+            {
+                for (int j = 0; j < dimensions.Y; j++)
+                {
+                    tileArray[i, j].Draw(spriteBatch, scenePosition);
                 }
             }
         }

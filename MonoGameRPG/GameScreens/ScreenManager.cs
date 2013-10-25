@@ -99,6 +99,7 @@ namespace MonoGameRPG.GameScreens
             PulseEffect pulseEffect = new PulseEffect();
             pulseEffect.MaxAlphaReached += transition_FadeFull;
             pulseEffect.MinAlphaReached += transition_Done;
+            pulseEffect.PulseSpeed = 2.0f;
             transitionTextureImage.AddEffect<PulseEffect>(ref pulseEffect, "PulseEffect");
 
             transitionTextureImage.DeactivateEffect("PulseEffect");
