@@ -6,11 +6,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Storage;
-using Microsoft.Xna.Framework.GamerServices;
 
 using MonoGameRPG.GameScreens;
+using MonoGameRPG.Input;
 using MonoGameRPG.Utility;
 
 #endregion
@@ -106,7 +104,7 @@ namespace MonoGameRPG
             ScreenManager.Instance.LoadContent(Content);
 
             // Set the current game screen to the splash screen
-            ScreenManager.Instance.ChangeScreen("SplashScreen");
+            ScreenManager.Instance.ChangeScreen("GameplayScreen");
         }
 
         /// <summary>

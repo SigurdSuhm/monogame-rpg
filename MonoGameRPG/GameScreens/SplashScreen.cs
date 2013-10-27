@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Input;
 using MonoGameRPG.Utility;
 
 #endregion

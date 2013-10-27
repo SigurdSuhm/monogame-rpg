@@ -47,6 +47,9 @@ namespace MonoGameRPG.Scene
         // Scene position bounds
         private Vector2 positionMinBounds, positionMaxBounds;
 
+        // Maximum bounds for scene nodes
+        private Vector2 nodeMaxBounds;
+
         #endregion
 
         #region Properties
@@ -79,6 +82,7 @@ namespace MonoGameRPG.Scene
 
             positionMinBounds = Vector2.Zero;
             positionMaxBounds = Vector2.Zero;
+            nodeMaxBounds = Vector2.Zero;
 
             sceneNodeDictionary = new Dictionary<string, SceneNode>();
             prevEntityPositions = new Dictionary<string, Vector2>();
@@ -121,6 +125,9 @@ namespace MonoGameRPG.Scene
             position += positionOffset;
             position.X = MathHelper.Clamp(position.X, positionMinBounds.X, positionMaxBounds.X);
             position.Y = MathHelper.Clamp(position.Y, positionMinBounds.Y, positionMaxBounds.Y);
+
+            nodeMaxBounds.X = dimensions.X;
+            nodeMaxBounds.Y = dimensions.Y;
         }
 
         /// <summary>
@@ -155,7 +162,7 @@ namespace MonoGameRPG.Scene
 
                 node.Update(gameTime);
 
-                handleNodeCollisions();
+                handleNodeCollisions(node);
 
                 // Check if the collision cell should be changed
                 if (!node.IsStatic)
@@ -170,6 +177,9 @@ namespace MonoGameRPG.Scene
                         node.CollisionCell = newCell;
                         node.CollisionCellsToCheck = getCellsToCheck(node);
                     }
+
+                    // Clamp position to scene bounds
+                    node.ClampToSceneBounds(nodeMaxBounds);
                 }
             }
 
@@ -226,32 +236,29 @@ namespace MonoGameRPG.Scene
         /// <summary>
         /// Handles collision detection for all scene nodes.
         /// </summary>
-        private void handleNodeCollisions()
+        private void handleNodeCollisions(SceneNode node)
         {
-            foreach (SceneNode node in sceneNodeDictionary.Values)
+            if (node is Entity)
             {
-                if (node is Entity)
+                Entity entity = node as Entity;
+
+                // Has a solid tile collision been found?
+                bool tileCollisionFound = false;
+
+                foreach (CollisionCell cell in entity.CollisionCellsToCheck)
                 {
-                    Entity entity = node as Entity;
-
-                    // Has a solid tile collision been found?
-                    bool tileCollisionFound = false;
-
-                    foreach (CollisionCell cell in entity.CollisionCellsToCheck)
+                    if (cell != null)
                     {
-                        if (cell != null)
+                        foreach (Tile tile in cell.TileList)
                         {
-                            foreach (Tile tile in cell.TileList)
+                            if (!tileCollisionFound && tile.CollisionValue == TileCollisionValue.Solid)
                             {
-                                if (!tileCollisionFound && tile.CollisionValue == TileCollisionValue.Solid)
+                                // Check for tile collision
+                                if (entity.BoundingShape.CollidesWith(tile.BoundingBox))
                                 {
-                                    // Check for tile collision
-                                    if (entity.BoundingShape.CollidesWith(tile.BoundingBox))
-                                    {
-                                        tileCollisionFound = true;
-                                        // Return to previous position
-                                        entity.Position = prevEntityPositions[entity.Name];
-                                    }
+                                    tileCollisionFound = true;
+                                    // Return to previous position
+                                    entity.Position = prevEntityPositions[entity.Name];
                                 }
                             }
                         }

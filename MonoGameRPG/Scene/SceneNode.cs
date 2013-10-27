@@ -122,6 +122,16 @@ namespace MonoGameRPG.Scene
         /// </summary>
         public abstract void UnloadContent();
 
+        /// <summary>
+        /// Clamps the scene node to the scene bounds.
+        /// </summary>
+        /// <param name="sceneMaxBounds">Maximum bounds of the scene.</param>
+        public virtual void ClampToSceneBounds(Vector2 sceneMaxBounds)
+        {
+            position.X = MathHelper.Clamp(position.X, 0, sceneMaxBounds.X);
+            position.Y = MathHelper.Clamp(position.Y, 0, sceneMaxBounds.Y);
+        }
+
         #endregion
     }
 }

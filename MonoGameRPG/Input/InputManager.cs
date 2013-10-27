@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 #endregion
 
-namespace MonoGameRPG
+namespace MonoGameRPG.Input
 {
     /// <summary>
     /// Input manager class handling all user input.
@@ -29,6 +29,9 @@ namespace MonoGameRPG
 
         // Current position of the mouse
         private Vector2 mousePosition;
+
+        // Player controller for player input abstraction
+        private PlayerController playerController;
 
         #endregion
 
@@ -61,6 +64,14 @@ namespace MonoGameRPG
             get { return mousePosition; }
         }
 
+        /// <summary>
+        /// Gets the player controller.
+        /// </summary>
+        public PlayerController PlayerController
+        {
+            get { return playerController; }
+        }
+
         #endregion
 
         #region Constructors
@@ -71,6 +82,7 @@ namespace MonoGameRPG
         private InputManager()
         {
             mousePosition = Vector2.Zero;
+            playerController = new PlayerController();
         }
 
         #endregion

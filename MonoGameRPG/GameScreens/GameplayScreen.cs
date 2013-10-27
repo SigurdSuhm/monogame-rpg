@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 using MonoGameRPG.Gameplay;
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Input;
 using MonoGameRPG.Utility;
 using MonoGameRPG.Scene;
 

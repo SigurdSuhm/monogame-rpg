@@ -38,6 +38,7 @@
     <Compile Include="BaseGame.cs" />
     <Compile Include="Dimensions2.cs" />
     <Compile Include="Gameplay\Enemy.cs" />
+    <Compile Include="Input\PlayerController.cs" />
     <Compile Include="Scene\CollisionCell.cs" />
     <Compile Include="Scene\CollisionGrid.cs" />
     <Compile Include="Scene\SceneNode.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="GameScreens\OptionsScreen.cs" />
     <Compile Include="GameScreens\GameplayScreen.cs" />
     <Compile Include="GameScreens\GameScreen.cs" />
-    <Compile Include="InputManager.cs" />
+    <Compile Include="Input\InputManager.cs" />
     <Compile Include="Graphics\Menu.cs" />
     <Compile Include="Graphics\MenuItem.cs" />
     <Compile Include="GameScreens\MenuScreen.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="GameScreens\ScreenManager.cs" />
     <Compile Include="Graphics\Image.cs" />
     <Compile Include="GameScreens\SplashScreen.cs" />
+    <Compile Include="Scene\SceneTransitionNode.cs" />
     <Compile Include="Scene\StaticSceneNode.cs" />
     <Compile Include="Utility\LogEntry.cs" />
     <Compile Include="Utility\LogEntryType.cs" />
@@ -148,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <None Include="Scene\StaticSceneNode.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

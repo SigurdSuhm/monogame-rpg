@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using MonoGameRPG.Graphics;
+using MonoGameRPG.Input;
 using MonoGameRPG.Physics;
 
 #endregion
@@ -33,10 +34,16 @@ namespace MonoGameRPG.Gameplay
 
         #region Fields
 
+        // Player controller object for input
+        private PlayerController playerController;
+
         // Player health
         private int currentHealth;
         // Player maximum health
         private int maxHealth;
+
+        // Size of the player bounding box
+        private Vector2 boundingBoxSize;
 
         #endregion
 
@@ -72,6 +79,9 @@ namespace MonoGameRPG.Gameplay
             // Create image object with texture path
             image = new Image(TEXTURE_PATH);
 
+            // Get player controller
+            playerController = InputManager.Instance.PlayerController;
+
             currentHealth = 100;
             maxHealth = 100;
         }
@@ -91,8 +101,13 @@ namespace MonoGameRPG.Gameplay
             // Load animation data
             image.AnimationManager.LoadAnimationData(ANIMATION_FILE_NAME);
             // Create bounding box
-            BoundingShape = new BoundingBoxAA(Position, new Vector2(image.AnimationManager.SpriteElementDimensions.X,
+            BoundingBoxAA boundingBox = new BoundingBoxAA(Position, new Vector2(image.AnimationManager.SpriteElementDimensions.X,
                 image.AnimationManager.SpriteElementDimensions.Y) + Position);
+            BoundingShape = boundingBox;
+
+            boundingBoxSize = new Vector2(boundingBox.Max.X - boundingBox.Min.X,
+                boundingBox.Max.Y - boundingBox.Min.Y);
+            
         }
 
         /// <summary>
@@ -105,6 +120,16 @@ namespace MonoGameRPG.Gameplay
             handleInput(gameTime);
 
             base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// Clamps the player to the scene bounds.
+        /// </summary>
+        /// <param name="sceneMaxBounds">Maximum bounds of the scene.</param>
+        public override void ClampToSceneBounds(Vector2 sceneMaxBounds)
+        {
+            position.X = MathHelper.Clamp(position.X, 0, sceneMaxBounds.X - boundingBoxSize.X);
+            position.Y = MathHelper.Clamp(position.Y, 0, sceneMaxBounds.Y - boundingBoxSize.Y);
         }
 
         #endregion
@@ -125,14 +150,14 @@ namespace MonoGameRPG.Gameplay
             playerDirection.Y = 0;
 
             // TODO: PLAYER INPUT FOR TESTING PURPOSES
-            if (InputManager.Instance.KeyDown(Keys.Left))
+            if (InputManager.Instance.KeyDown(playerController.MoveLeft))
             {
                 Position = new Vector2((float)(Position.X - PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds),
                     Position.Y);
                 playerMoving = true;
                 playerDirection.X = -1;
             }
-            else if (InputManager.Instance.KeyDown(Keys.Right))
+            else if (InputManager.Instance.KeyDown(playerController.MoveRight))
             {
                 Position = new Vector2((float)(Position.X + PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds),
                     Position.Y);
@@ -140,20 +165,21 @@ namespace MonoGameRPG.Gameplay
                 playerDirection.X = 1;
             }
 
-            if (InputManager.Instance.KeyDown(Keys.Down))
+            if (InputManager.Instance.KeyDown(playerController.MoveDown))
             {
                 Position = new Vector2(Position.X,
                     (float)(Position.Y + PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds));
                 playerMoving = true;
                 playerDirection.Y = 1;
             }
-            else if (InputManager.Instance.KeyDown(Keys.Up))
+            else if (InputManager.Instance.KeyDown(playerController.MoveUp))
             {
                 Position = new Vector2(Position.X,
                     (float)(Position.Y - PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds));
                 playerMoving = true;
                 playerDirection.Y = -1;
             }
+
 
             if (!playerMoving)
                 image.AnimationManager.StopAnimation();
